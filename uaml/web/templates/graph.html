@@ -1,0 +1,231 @@
+<div class="page-header">
+    <h1>🔗 <span data-i18n="graph.title">Graph</span></h1>
+    <p class="subtitle">Explore entity relationships and connections</p>
+</div>
+
+<div class="toolbar">
+    <div class="search-group">
+        <input type="text" id="graph-search" placeholder="Search for entity..." class="input-lg">
+        <button onclick="searchGraph()" class="btn btn-primary">🔍 Find</button>
+    </div>
+    <div class="filter-group">
+        <select id="graph-layer" onchange="loadGraphData()">
+            <option value="">All Layers</option>
+            <option value="identity">🔑 Identity</option>
+            <option value="knowledge">📚 Knowledge</option>
+            <option value="team">👥 Team</option>
+            <option value="operational">⚙️ Operational</option>
+            <option value="project">📁 Project</option>
+        </select>
+    </div>
+</div>
+
+<div class="grid-2col">
+    <div class="card" style="grid-column: 1 / -1">
+        <h2>Graph Visualization</h2>
+        <div id="graph-container" class="graph-area">
+            <canvas id="graph-canvas" width="1200" height="600"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>📋 Entity List</h2>
+    <div id="entity-list" class="entity-grid">
+        <div class="loading">Loading...</div>
+    </div>
+</div>
+
+<script>
+// Simple force-directed graph visualization
+class SimpleGraph {
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.nodes = [];
+        this.edges = [];
+        this.animating = false;
+        this.selectedNode = null;
+
+        canvas.addEventListener('click', (e) => this.onClick(e));
+    }
+
+    setData(nodes, edges) {
+        // Assign random positions
+        this.nodes = nodes.map((n, i) => ({
+            ...n,
+            x: 100 + Math.random() * (this.canvas.width - 200),
+            y: 100 + Math.random() * (this.canvas.height - 200),
+            vx: 0, vy: 0,
+        }));
+        this.edges = edges;
+        this.simulate(60);
+        this.draw();
+    }
+
+    simulate(iterations) {
+        for (let iter = 0; iter < iterations; iter++) {
+            // Repulsion between nodes
+            for (let i = 0; i < this.nodes.length; i++) {
+                for (let j = i + 1; j < this.nodes.length; j++) {
+                    const dx = this.nodes[j].x - this.nodes[i].x;
+                    const dy = this.nodes[j].y - this.nodes[i].y;
+                    const dist = Math.max(Math.sqrt(dx * dx + dy * dy), 1);
+                    const force = 5000 / (dist * dist);
+                    const fx = (dx / dist) * force;
+                    const fy = (dy / dist) * force;
+                    this.nodes[i].vx -= fx;
+                    this.nodes[i].vy -= fy;
+                    this.nodes[j].vx += fx;
+                    this.nodes[j].vy += fy;
+                }
+            }
+
+            // Attraction along edges
+            for (const edge of this.edges) {
+                const a = this.nodes.find(n => n.id === edge.source);
+                const b = this.nodes.find(n => n.id === edge.target);
+                if (!a || !b) continue;
+                const dx = b.x - a.x;
+                const dy = b.y - a.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const force = (dist - 120) * 0.01;
+                const fx = (dx / dist) * force;
+                const fy = (dy / dist) * force;
+                a.vx += fx; a.vy += fy;
+                b.vx -= fx; b.vy -= fy;
+            }
+
+            // Center gravity
+            const cx = this.canvas.width / 2, cy = this.canvas.height / 2;
+            for (const n of this.nodes) {
+                n.vx += (cx - n.x) * 0.001;
+                n.vy += (cy - n.y) * 0.001;
+                n.vx *= 0.8; n.vy *= 0.8;
+                n.x += n.vx; n.y += n.vy;
+                n.x = Math.max(30, Math.min(this.canvas.width - 30, n.x));
+                n.y = Math.max(30, Math.min(this.canvas.height - 30, n.y));
+            }
+        }
+    }
+
+    draw() {
+        const ctx = this.ctx;
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // Draw edges
+        ctx.strokeStyle = '#444';
+        ctx.lineWidth = 1;
+        for (const edge of this.edges) {
+            const a = this.nodes.find(n => n.id === edge.source);
+            const b = this.nodes.find(n => n.id === edge.target);
+            if (!a || !b) continue;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+        }
+
+        // Draw nodes
+        const colors = {
+            identity: '#e74c3c', knowledge: '#3498db', team: '#2ecc71',
+            operational: '#f39c12', project: '#9b59b6',
+        };
+        for (const n of this.nodes) {
+            ctx.fillStyle = colors[n.layer] || '#95a5a6';
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n === this.selectedNode ? 12 : 8, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = '#eee';
+            ctx.font = '11px system-ui';
+            ctx.textAlign = 'center';
+            ctx.fillText(n.label.substring(0, 20), n.x, n.y - 14);
+        }
+    }
+
+    onClick(e) {
+        const rect = this.canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        this.selectedNode = this.nodes.find(n => {
+            const dx = n.x - mx, dy = n.y - my;
+            return Math.sqrt(dx*dx + dy*dy) < 15;
+        });
+        this.draw();
+        if (this.selectedNode) {
+            window.location = `/knowledge?id=${this.selectedNode.id}`;
+        }
+    }
+}
+
+let graph;
+
+async function loadGraphData() {
+    const layer = document.getElementById('graph-layer').value;
+    const url = `/api/knowledge?limit=50${layer ? '&layer=' + layer : ''}`;
+    const data = await fetch(url).then(r => r.json());
+
+    if (!graph) {
+        graph = new SimpleGraph(document.getElementById('graph-canvas'));
+    }
+
+    // Build nodes and edges from topic clustering
+    const nodes = [];
+    const edges = [];
+    const topicMap = {};
+
+    for (const e of data.entries) {
+        nodes.push({ id: e.id, label: e.topic || `#${e.id}`, layer: e.data_layer });
+        if (e.topic) {
+            if (topicMap[e.topic]) {
+                edges.push({ source: topicMap[e.topic], target: e.id });
+            }
+            topicMap[e.topic] = e.id;
+        }
+    }
+
+    graph.setData(nodes, edges);
+
+    // Entity list
+    const listEl = document.getElementById('entity-list');
+    const topicCounts = {};
+    data.entries.forEach(e => {
+        const t = e.topic || 'untitled';
+        topicCounts[t] = (topicCounts[t] || 0) + 1;
+    });
+    listEl.innerHTML = Object.entries(topicCounts)
+        .sort((a, b) => b[1] - a[1])
+        .map(([topic, count]) => `
+            <div class="entity-card" onclick="document.getElementById('graph-search').value='${topic}'; searchGraph()">
+                <div class="entity-name">${topic}</div>
+                <div class="entity-count">${count} entries</div>
+            </div>
+        `).join('');
+}
+
+async function searchGraph() {
+    const q = document.getElementById('graph-search').value.trim();
+    if (!q) { loadGraphData(); return; }
+    const data = await fetch(`/api/knowledge?q=${encodeURIComponent(q)}&limit=30`).then(r => r.json());
+
+    const nodes = data.entries.map(e => ({ id: e.id, label: e.topic || `#${e.id}`, layer: e.data_layer }));
+    const edges = [];
+    // Connect entries that share topics
+    const byTopic = {};
+    data.entries.forEach(e => {
+        if (e.topic) {
+            if (byTopic[e.topic]) edges.push({ source: byTopic[e.topic], target: e.id });
+            byTopic[e.topic] = e.id;
+        }
+    });
+
+    graph.setData(nodes, edges);
+}
+
+document.getElementById('graph-search')?.addEventListener('keypress', e => {
+    if (e.key === 'Enter') searchGraph();
+});
+
+loadGraphData();
+</script>

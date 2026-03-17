@@ -1,0 +1,60 @@
+UAML Memory — Universal Agent Memory Layer
+Copyright (c) 2026 GLG, a.s. All rights reserved.
+
+PROPRIETARY SOFTWARE LICENSE
+
+1. PERSONAL USE (Community Plan)
+
+   Permission is hereby granted, free of charge, to any individual obtaining
+   a copy of this software and associated documentation files (the "Software"),
+   to use the Software for personal, non-commercial purposes only, subject to
+   the following conditions:
+
+   - The above copyright notice and this permission notice shall be included
+     in all copies or substantial portions of the Software.
+   - Personal use is limited to features available under the Community plan.
+   - The Software may not be used for commercial purposes, resold,
+     sublicensed, or redistributed for commercial advantage.
+   - You may not reverse engineer, decompile, or create derivative works
+     for commercial distribution.
+
+2. COMMERCIAL USE (Paid Subscription)
+
+   Commercial use of the Software requires an active paid subscription from
+   GLG, a.s. Subscription plans (Starter, Professional, Team, Enterprise)
+   unlock additional features based on the selected tier.
+
+   - License rights are time-limited to the active subscription period.
+   - Upon subscription expiration, paid features are locked; personal-use
+     features (Community plan) remain available. Your data is preserved.
+   - One full installation; features are enabled/disabled based on the
+     active license tier.
+   - For pricing and plans, see: https://uaml-memory.com
+
+3. RESTRICTIONS
+
+   - No part of this Software may be used commercially without a valid
+     paid subscription from GLG, a.s.
+   - Redistribution of the Software or its components for commercial
+     purposes is strictly prohibited.
+   - The Software and all intellectual property therein remain the
+     exclusive property of GLG, a.s.
+
+4. EXPERIMENTAL STATUS
+
+   The Software is under active development and should be considered
+   experimental. APIs, configurations, and behavior may change between
+   versions without prior notice. Use at your own risk. Customization
+   to your specific workflow and use case will be required.
+
+5. DISCLAIMER
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+   GLG, A.S. OR ITS CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+   DEALINGS IN THE SOFTWARE.
+
+Contact: info@uaml.ai | https://uaml-memory.com

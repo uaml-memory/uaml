@@ -1,0 +1,199 @@
+<div class="page-header">
+    <h1>📊 <span data-i18n="dashboard.title">Dashboard</span></h1>
+    <p class="subtitle" data-i18n="dashboard.subtitle">UAML — Unified Agent Memory Layer</p>
+</div>
+
+<!-- System Info -->
+<div class="card" style="margin-bottom: 16px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+        <div>
+            <h2>🖥️ <span data-i18n="dashboard.system">System</span></h2>
+            <div class="info-grid" id="sys-info">
+                <div class="loading" data-i18n="common.loading">Loading...</div>
+            </div>
+        </div>
+        <div>
+            <h2>🤖 <span data-i18n="dashboard.ai_agent">AI Agent</span></h2>
+            <div class="info-grid" id="agent-info">
+                <div class="loading" data-i18n="common.loading">Loading...</div>
+            </div>
+        </div>
+        <div>
+            <h2>⚡ <span data-i18n="dashboard.versions">Versions</span></h2>
+            <div class="info-grid" id="version-info">
+                <div class="loading" data-i18n="common.loading">Loading...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="stats-grid" id="stats-grid">
+    <div class="stat-card">
+        <div class="stat-value" id="stat-knowledge">-</div>
+        <div class="stat-label" data-i18n="dashboard.knowledge_entries">Knowledge Entries</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value" id="stat-tasks">-</div>
+        <div class="stat-label" data-i18n="dashboard.tasks">Tasks</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value" id="stat-reasoning">-</div>
+        <div class="stat-label" data-i18n="dashboard.reasoning_traces">Reasoning Traces</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value" id="stat-layers">-</div>
+        <div class="stat-label" data-i18n="dashboard.data_layers">Data Layers</div>
+    </div>
+</div>
+
+<div class="grid-2col">
+    <div class="card">
+        <h2>📊 <span data-i18n="dashboard.data_layers">Data Layers</span></h2>
+        <div id="layers-chart" class="chart-container">
+            <div class="loading" data-i18n="common.loading">Loading...</div>
+        </div>
+    </div>
+    <div class="card">
+        <h2>🔍 <span data-i18n="dashboard.quick_search">Quick Search</span></h2>
+        <div class="search-box">
+            <input type="text" id="quick-search" data-i18n-placeholder="dashboard.search_placeholder" placeholder="Search knowledge base..." class="input-full">
+            <button onclick="quickSearch()" class="btn btn-primary" data-i18n="dashboard.search_btn">Search</button>
+        </div>
+        <div id="search-results" class="results-list"></div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>📅 <span data-i18n="dashboard.recent_activity">Recent Activity</span></h2>
+    <div id="recent-activity" class="activity-list">
+        <div class="loading" data-i18n="common.loading">Loading...</div>
+    </div>
+</div>
+
+<script>
+async function loadSystemInfo() {
+    try {
+        const sys = await fetch('/api/system').then(r => r.json());
+        const m = sys.machine || {};
+        const v = sys.versions || {};
+        const a = sys.agent || {};
+
+        const sysEl = document.getElementById('sys-info');
+        let sysHtml = '';
+        if (m.hostname) sysHtml += `<div class="info-row"><strong>🖥️ ${t('dashboard.machine','Machine')}:</strong> ${escapeHtml(m.hostname)}</div>`;
+        if (m.os) sysHtml += `<div class="info-row"><strong>💻 ${t('dashboard.os','OS')}:</strong> ${escapeHtml(m.os)}</div>`;
+        if (m.arch) sysHtml += `<div class="info-row"><strong>⚙️ ${t('dashboard.arch','Arch')}:</strong> ${escapeHtml(m.arch)}</div>`;
+        if (m.cpu_cores) sysHtml += `<div class="info-row"><strong>🧮 ${t('dashboard.cpu','CPU')}:</strong> ${m.cpu_cores} ${t('dashboard.cores','cores')}</div>`;
+        if (m.ram_gb) sysHtml += `<div class="info-row"><strong>🧠 RAM:</strong> ${m.ram_gb} GB</div>`;
+        if (m.gpus && m.gpus.length > 0) {
+            m.gpus.forEach(g => {
+                const vram = g.vram_mb >= 1024 ? (g.vram_mb / 1024).toFixed(0) + ' GB' : g.vram_mb + ' MB';
+                sysHtml += `<div class="info-row"><strong>🎮 GPU:</strong> ${escapeHtml(g.name)} (${vram} VRAM)</div>`;
+            });
+        }
+        if (m.db_size_bytes) {
+            const dbSize = m.db_size_bytes >= 1048576 ? (m.db_size_bytes / 1048576).toFixed(1) + ' MB' : (m.db_size_bytes / 1024).toFixed(0) + ' KB';
+            sysHtml += `<div class="info-row"><strong>💾 ${t('dashboard.db_size','DB Size')}:</strong> ${dbSize}</div>`;
+        }
+
+        // Database paths
+        const db = sys.database || {};
+        if (db.knowledge_db) sysHtml += `<div class="info-row"><strong>📂 ${t('dashboard.knowledge_db','Knowledge DB')}:</strong> <code>${escapeHtml(db.knowledge_db)}</code></div>`;
+        if (db.todo_db) sysHtml += `<div class="info-row"><strong>📋 ${t('dashboard.todo_db','TODO DB')}:</strong> <code>${escapeHtml(db.todo_db)}</code></div>`;
+
+        sysEl.innerHTML = sysHtml || `<p class="muted">${t('common.no_data','No data')}</p>`;
+
+        const agentEl = document.getElementById('agent-info');
+        let agentHtml = '';
+        if (a.name) agentHtml += `<div class="info-row"><strong>🤖 ${t('common.agent','Agent')}:</strong> ${escapeHtml(a.name)}</div>`;
+        if (a.model && a.model !== 'not configured') agentHtml += `<div class="info-row"><strong>🧠 ${t('common.model','Model')}:</strong> ${escapeHtml(a.model)}</div>`;
+        if (a.framework) agentHtml += `<div class="info-row"><strong>🔧 Framework:</strong> ${escapeHtml(a.framework)}</div>`;
+        agentEl.innerHTML = agentHtml || `<p class="muted">${t('common.no_data','No data')}</p>`;
+
+        const verEl = document.getElementById('version-info');
+        let verHtml = '';
+        if (v.uaml) verHtml += `<div class="info-row"><strong>📦 UAML:</strong> v${escapeHtml(v.uaml)}</div>`;
+        if (v.mcp) verHtml += `<div class="info-row"><strong>🔌 MCP:</strong> v${escapeHtml(v.mcp)}</div>`;
+        if (v.dashboard) verHtml += `<div class="info-row"><strong>🖥️ Dashboard:</strong> v${escapeHtml(v.dashboard)}</div>`;
+        if (v.api) verHtml += `<div class="info-row"><strong>🔗 API:</strong> ${escapeHtml(v.api)}</div>`;
+        if (m.python) verHtml += `<div class="info-row"><strong>🐍 Python:</strong> ${escapeHtml(m.python)}</div>`;
+        verEl.innerHTML = verHtml || `<p class="muted">${t('common.no_data','No data')}</p>`;
+    } catch (e) {
+        console.error('System info error:', e);
+        ['sys-info', 'agent-info', 'version-info'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = `<p class="muted">${t('common.error','Could not load')}</p>`;
+        });
+    }
+}
+
+async function loadDashboard() {
+    try {
+        const stats = await fetch('/api/stats').then(r => r.json());
+        document.getElementById('stat-knowledge').textContent = stats.knowledge || 0;
+        document.getElementById('stat-tasks').textContent = stats.tasks || 0;
+        document.getElementById('stat-reasoning').textContent = stats.reasoning_traces || 0;
+        document.getElementById('stat-layers').textContent = Object.keys(stats.layers || {}).length;
+
+        const layersEl = document.getElementById('layers-chart');
+        if (stats.layers && Object.keys(stats.layers).length > 0) {
+            const maxCount = Math.max(...Object.values(stats.layers));
+            layersEl.innerHTML = Object.entries(stats.layers).map(([name, count]) => {
+                const pct = Math.round((count / maxCount) * 100);
+                const emoji = {identity: '🔑', knowledge: '📚', team: '👥', operational: '⚙️', project: '📁'}[name] || '📄';
+                return `<div class="bar-row">
+                    <span class="bar-label">${emoji} ${name}</span>
+                    <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+                    <span class="bar-value">${count}</span>
+                </div>`;
+            }).join('');
+        } else {
+            layersEl.innerHTML = `<p class="muted">${t('common.no_data','No data yet')}</p>`;
+        }
+
+        const timeline = await fetch('/api/timeline?limit=10').then(r => r.json());
+        const actEl = document.getElementById('recent-activity');
+        if (timeline.items && timeline.items.length > 0) {
+            actEl.innerHTML = timeline.items.map(item => `
+                <div class="activity-item">
+                    <span class="activity-badge badge-${item.layer || 'knowledge'}">${item.layer || '?'}</span>
+                    <span class="activity-content">${escapeHtml(item.content)}</span>
+                    <span class="activity-time">${formatTime(item.timestamp)}</span>
+                </div>
+            `).join('');
+        } else {
+            actEl.innerHTML = `<p class="muted">${t('common.no_data','No activity yet')}</p>`;
+        }
+    } catch (e) {
+        console.error('Dashboard load error:', e);
+    }
+}
+
+async function quickSearch() {
+    const q = document.getElementById('quick-search').value.trim();
+    if (!q) return;
+    const data = await fetch(`/api/knowledge?q=${encodeURIComponent(q)}&limit=5`).then(r => r.json());
+    const el = document.getElementById('search-results');
+    if (data.entries && data.entries.length > 0) {
+        el.innerHTML = data.entries.map(e => `
+            <div class="result-item" onclick="window.location='/knowledge?id=${e.id}'">
+                <div class="result-topic">${e.topic || 'untitled'}</div>
+                <div class="result-content">${escapeHtml((e.content || e.topic || '').substring(0, 150))}...</div>
+                <div class="result-meta">
+                    <span class="badge badge-${e.data_layer}">${e.data_layer}</span>
+                    ${e.score ? `<span class="score">Score: ${e.score.toFixed(2)}</span>` : ''}
+                </div>
+            </div>
+        `).join('');
+    } else {
+        el.innerHTML = `<p class="muted">${t('common.no_results','No results found')}</p>`;
+    }
+}
+
+document.getElementById('quick-search')?.addEventListener('keypress', e => {
+    if (e.key === 'Enter') quickSearch();
+});
+
+loadSystemInfo();
+loadDashboard();
+</script>

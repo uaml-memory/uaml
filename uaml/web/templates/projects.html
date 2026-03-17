@@ -1,0 +1,81 @@
+<div class="page-header">
+    <h1>📂 <span data-i18n="projects.title">Projects</span></h1>
+    <div class="subtitle" data-i18n="projects.subtitle">TODO groups and project tracking</div>
+</div>
+
+<div class="toolbar">
+    <input type="text" id="project-search" placeholder="Search projects..." class="input-lg" style="flex:1;" oninput="filterProjects()">
+</div>
+
+<div id="projects-list">
+    <div class="loading">Loading projects...</div>
+</div>
+
+<!-- Project Detail Modal -->
+<div id="project-modal" class="modal" style="display:none;" onclick="if(event.target===this)closeProjectModal()">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="project-modal-title">Project</h2>
+            <button class="btn-close" onclick="closeProjectModal()">×</button>
+        </div>
+        <div class="modal-body" id="project-modal-body"></div>
+    </div>
+</div>
+
+<script>
+let allProjects = [];
+
+function filterProjects() {
+    const q = document.getElementById('project-search').value.toLowerCase();
+    renderProjects(allProjects.filter(p => p.name.toLowerCase().includes(q)));
+}
+
+function renderProjects(projects) {
+    const el = document.getElementById('projects-list');
+    if (!projects.length) { el.innerHTML = '<div class="muted">No projects found.</div>'; return; }
+    el.innerHTML = projects.map(p => `
+        <div class="card" style="cursor:pointer;" onclick="showProject(${p.id})">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <strong>${escapeHtml(p.name)}</strong>
+                    <span class="muted" style="margin-left:8px;">${p.done}/${p.total} done</span>
+                </div>
+                <span class="badge ${p.progress >= 100 ? 'badge-knowledge' : p.progress > 50 ? 'badge-operational' : 'badge-project'}">${p.progress}%</span>
+            </div>
+            <div style="margin-top:8px;">
+                <div class="bar-track">
+                    <div class="bar-fill" style="width:${p.progress}%; background: ${p.progress >= 100 ? 'var(--success)' : p.progress > 50 ? 'var(--warning)' : 'var(--primary)'}"></div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function showProject(id) {
+    fetch('/api/projects/' + id).then(r => r.json()).then(data => {
+        document.getElementById('project-modal-title').textContent = data.name;
+        const body = document.getElementById('project-modal-body');
+        if (!data.items.length) { body.innerHTML = '<div class="muted">No items.</div>'; }
+        else {
+            body.innerHTML = '<table class="data-table"><thead><tr><th>Status</th><th>Task</th><th>Updated</th></tr></thead><tbody>' +
+                data.items.map(i => `
+                    <tr>
+                        <td>${i.status === 'done' ? '✅' : i.status === 'in_progress' ? '🔄' : '⬜'}</td>
+                        <td>${escapeHtml(i.text)}</td>
+                        <td class="time-cell">${formatTime(i.updated_at)}</td>
+                    </tr>
+                `).join('') + '</tbody></table>';
+        }
+        document.getElementById('project-modal').style.display = 'flex';
+    });
+}
+
+function closeProjectModal() {
+    document.getElementById('project-modal').style.display = 'none';
+}
+
+fetch('/api/projects').then(r => r.json()).then(data => {
+    allProjects = data.projects;
+    renderProjects(allProjects);
+});
+</script>

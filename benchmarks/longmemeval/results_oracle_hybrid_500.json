@@ -1,0 +1,44 @@
+{
+  "dataset": "oracle",
+  "mode": "hybrid",
+  "instances": 500,
+  "top_k": 5,
+  "overall": {
+    "retrieval_hit_rate": 0.22,
+    "exact_match_rate": 0.146,
+    "avg_ingest_ms": 0.9,
+    "avg_search_ms": 3.7
+  },
+  "by_type": {
+    "temporal-reasoning": {
+      "count": 133,
+      "retrieval_hit_rate": 0.3308,
+      "exact_match_rate": 0.1654
+    },
+    "multi-session": {
+      "count": 133,
+      "retrieval_hit_rate": 0.1353,
+      "exact_match_rate": 0.0977
+    },
+    "knowledge-update": {
+      "count": 78,
+      "retrieval_hit_rate": 0.3974,
+      "exact_match_rate": 0.3205
+    },
+    "single-session-preference": {
+      "count": 30,
+      "retrieval_hit_rate": 0.0,
+      "exact_match_rate": 0.0
+    },
+    "single-session-assistant": {
+      "count": 56,
+      "retrieval_hit_rate": 0.1071,
+      "exact_match_rate": 0.0714
+    },
+    "single-session-user": {
+      "count": 70,
+      "retrieval_hit_rate": 0.1571,
+      "exact_match_rate": 0.1286
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "app_name": "UAML Dashboard",
+  "nav": {
+    "dashboard": "Prehľad",
+    "knowledge": "Znalosti",
+    "tasks": "Úlohy",
+    "graph": "Graf",
+    "timeline": "Časová os",
+    "projects": "Projekty",
+    "infrastructure": "Infraštruktúra",
+    "team": "Tím",
+    "compliance": "Súlad",
+    "export": "Export",
+    "settings": "Nastavenia"
+  },
+  "dashboard": {
+    "title": "Prehľad",
+    "subtitle": "Univerzálna pamäťová vrstva pre AI agentov",
+    "knowledge_entries": "Záznamy znalostí",
+    "tasks": "Úlohy",
+    "reasoning_traces": "Záznamy úvah",
+    "data_layers": "Dátové vrstvy",
+    "quick_search": "Rýchle hľadanie",
+    "search_placeholder": "Hľadať v znalostnej báze...",
+    "recent_activity": "Posledná aktivita",
+    "no_data": "Zatiaľ žiadne dáta",
+    "no_results": "Nič sa nenašlo",
+    "system": "Systém",
+    "ai_agent": "AI Agent",
+    "versions": "Verzie",
+    "machine": "Stroj",
+    "os": "OS",
+    "arch": "Architektúra",
+    "cpu": "CPU",
+    "cores": "jadier",
+    "db_size": "Veľkosť DB",
+    "search_btn": "Hľadať"
+  },
+  "knowledge": {
+    "title": "Znalosti",
+    "subtitle": "Prehliadanie a správa záznamov znalostí",
+    "search_placeholder": "Hľadať...",
+    "all_layers": "Všetky vrstvy",
+    "add_entry": "Pridať záznam",
+    "topic": "Téma",
+    "content": "Obsah",
+    "layer": "Vrstva",
+    "confidence": "Spoľahlivosť",
+    "created": "Vytvorené",
+    "tags": "Štítky",
+    "prev": "Predchádzajúca",
+    "next": "Ďalšia"
+  },
+  "tasks": {
+    "title": "Úlohy",
+    "subtitle": "Správa a sledovanie úloh",
+    "add_task": "Pridať úlohu",
+    "open": "Otvorené",
+    "in_progress": "Prebiehajúce",
+    "done": "Hotové",
+    "priority": "Priorita",
+    "assigned": "Priradené"
+  },
+  "projects": {
+    "title": "Projekty",
+    "subtitle": "TODO skupiny a sledovanie projektov",
+    "search_placeholder": "Hľadať projekty...",
+    "no_projects": "Žiadne projekty sa nenašli",
+    "done_of_total": "hotovo",
+    "status": "Stav",
+    "task": "Úloha",
+    "updated": "Aktualizované"
+  },
+  "infrastructure": {
+    "title": "Infraštruktúra",
+    "subtitle": "Stroje, služby a sieťová topológia",
+    "network": "Sieťová topológia",
+    "role": "Rola",
+    "os": "OS",
+    "ip": "IP",
+    "hw": "Hardvér",
+    "services": "Služby"
+  },
+  "team": {
+    "title": "Tím",
+    "subtitle": "Členovia AI tímu a ich role",
+    "rules": "Pravidlá tímu",
+    "model": "Model",
+    "host": "Stroj"
+  },
+  "compliance": {
+    "title": "Súlad",
+    "subtitle": "Stav súladu s GDPR a ISO 27001"
+  },
+  "export": {
+    "title": "Export / Import",
+    "subtitle": "Export dát, import a správa záloh"
+  },
+  "settings": {
+    "title": "Nastavenia",
+    "subtitle": "Konfigurácia systému a referencia API"
+  },
+  "common": {
+    "loading": "Načítavanie...",
+    "search": "Hľadať",
+    "save": "Uložiť",
+    "cancel": "Zrušiť",
+    "delete": "Zmazať",
+    "close": "Zavrieť",
+    "api_connected": "API pripojené",
+    "machine": "Stroj",
+    "language": "Jazyk",
+    "agent": "Agent",
+    "model": "Model",
+    "no_data": "Žiadne dáta",
+    "no_results": "Nič sa nenašlo",
+    "error": "Nepodarilo sa načítať"
+  },
+  "timeline": {
+    "title": "Časová os"
+  },
+  "graph": {
+    "title": "Graf"
+  }
+}

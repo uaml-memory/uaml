@@ -1,0 +1,125 @@
+{
+  "app_name": "UAML Dashboard",
+  "nav": {
+    "dashboard": "Pulpit",
+    "knowledge": "Wiedza",
+    "tasks": "Zadania",
+    "graph": "Graf",
+    "timeline": "Oś czasu",
+    "projects": "Projekty",
+    "infrastructure": "Infrastruktura",
+    "team": "Zespół",
+    "compliance": "Zgodność",
+    "export": "Eksport",
+    "settings": "Ustawienia"
+  },
+  "dashboard": {
+    "title": "Pulpit",
+    "subtitle": "Uniwersalna warstwa pamięci dla agentów AI",
+    "knowledge_entries": "Wpisy wiedzy",
+    "tasks": "Zadania",
+    "reasoning_traces": "Ślady rozumowania",
+    "data_layers": "Warstwy danych",
+    "quick_search": "Szybkie wyszukiwanie",
+    "search_placeholder": "Szukaj w bazie wiedzy...",
+    "recent_activity": "Ostatnia aktywność",
+    "no_data": "Brak danych",
+    "no_results": "Nie znaleziono wyników",
+    "system": "System",
+    "ai_agent": "Agent AI",
+    "versions": "Wersje",
+    "machine": "Maszyna",
+    "os": "OS",
+    "arch": "Architektura",
+    "cpu": "CPU",
+    "cores": "rdzeni",
+    "db_size": "Rozmiar DB",
+    "search_btn": "Szukaj"
+  },
+  "knowledge": {
+    "title": "Wiedza",
+    "subtitle": "Przeglądanie i zarządzanie wpisami wiedzy",
+    "search_placeholder": "Szukaj...",
+    "all_layers": "Wszystkie warstwy",
+    "add_entry": "Dodaj wpis",
+    "topic": "Temat",
+    "content": "Treść",
+    "layer": "Warstwa",
+    "confidence": "Pewność",
+    "created": "Utworzono",
+    "tags": "Tagi",
+    "prev": "Poprzednia",
+    "next": "Następna"
+  },
+  "tasks": {
+    "title": "Zadania",
+    "subtitle": "Zarządzanie i śledzenie zadań",
+    "add_task": "Dodaj zadanie",
+    "open": "Otwarte",
+    "in_progress": "W toku",
+    "done": "Gotowe",
+    "priority": "Priorytet",
+    "assigned": "Przypisane"
+  },
+  "projects": {
+    "title": "Projekty",
+    "subtitle": "Grupy TODO i śledzenie projektów",
+    "search_placeholder": "Szukaj projektów...",
+    "no_projects": "Nie znaleziono projektów",
+    "done_of_total": "gotowe",
+    "status": "Status",
+    "task": "Zadanie",
+    "updated": "Zaktualizowano"
+  },
+  "infrastructure": {
+    "title": "Infrastruktura",
+    "subtitle": "Maszyny, usługi i topologia sieci",
+    "network": "Topologia sieci",
+    "role": "Rola",
+    "os": "System",
+    "ip": "IP",
+    "hw": "Sprzęt",
+    "services": "Usługi"
+  },
+  "team": {
+    "title": "Zespół",
+    "subtitle": "Członkowie zespołu AI i ich role",
+    "rules": "Zasady zespołu",
+    "model": "Model",
+    "host": "Host"
+  },
+  "compliance": {
+    "title": "Zgodność",
+    "subtitle": "Status zgodności z GDPR i ISO 27001"
+  },
+  "export": {
+    "title": "Eksport / Import",
+    "subtitle": "Eksport danych, import i zarządzanie kopiami zapasowymi"
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "subtitle": "Konfiguracja systemu i dokumentacja API"
+  },
+  "common": {
+    "loading": "Ładowanie...",
+    "search": "Szukaj",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "close": "Zamknij",
+    "api_connected": "API połączone",
+    "machine": "Maszyna",
+    "language": "Język",
+    "agent": "Agent",
+    "model": "Model",
+    "no_data": "Brak danych",
+    "no_results": "Brak wyników",
+    "error": "Nie udało się załadować"
+  },
+  "timeline": {
+    "title": "Oś czasu"
+  },
+  "graph": {
+    "title": "Graf"
+  }
+}

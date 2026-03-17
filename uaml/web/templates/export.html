@@ -1,0 +1,85 @@
+<div class="page-header">
+    <h1>📦 <span data-i18n="export.title">Export / Import</span></h1>
+    <p class="subtitle" data-i18n="export.subtitle">Data export, import, and backup management</p>
+</div>
+
+<div class="grid-2col">
+    <div class="card">
+        <h2>📤 Export</h2>
+        <div class="form-group">
+            <label>Data Layer</label>
+            <select id="export-layer" class="input-full">
+                <option value="">All Layers</option>
+                <option value="knowledge">📚 Knowledge</option>
+                <option value="team">👥 Team</option>
+                <option value="operational">⚙️ Operational</option>
+                <option value="project">📁 Project</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Format</label>
+            <select id="export-format" class="input-full">
+                <option value="jsonl">JSONL (full)</option>
+                <option value="json">JSON (array)</option>
+                <option value="csv">CSV (basic fields)</option>
+            </select>
+        </div>
+        <button onclick="exportData()" class="btn btn-primary btn-full">📤 Export Data</button>
+        <p class="muted mt-1">CLI: <code>uaml io export --layer knowledge --output data.jsonl</code></p>
+    </div>
+
+    <div class="card">
+        <h2>📥 Import</h2>
+        <div class="form-group">
+            <label>File (JSONL)</label>
+            <input type="file" id="import-file" accept=".jsonl,.json" class="input-full">
+        </div>
+        <button onclick="importData()" class="btn btn-success btn-full">📥 Import Data</button>
+        <p class="muted mt-1">CLI: <code>uaml io import data.jsonl</code></p>
+    </div>
+</div>
+
+<div class="card">
+    <h2>💾 Backup</h2>
+    <div class="backup-info">
+        <p>Manage backups via CLI:</p>
+        <ul>
+            <li><code>uaml backup run</code> — Create backup</li>
+            <li><code>uaml backup list</code> — List backups</li>
+            <li><code>uaml backup verify &lt;path&gt;</code> — Verify backup integrity</li>
+            <li><code>uaml backup config</code> — Configure backup (PQC encryption, retention)</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+async function exportData() {
+    const layer = document.getElementById('export-layer').value;
+    const format = document.getElementById('export-format').value;
+    const url = `/api/knowledge?limit=10000${layer ? '&layer=' + layer : ''}`;
+    const data = await fetch(url).then(r => r.json());
+
+    let content, filename, mime;
+    if (format === 'jsonl') {
+        content = data.entries.map(e => JSON.stringify(e)).join('\n');
+        filename = `uaml_export_${layer || 'all'}.jsonl`;
+        mime = 'application/jsonl';
+    } else if (format === 'json') {
+        content = JSON.stringify(data.entries, null, 2);
+        filename = `uaml_export_${layer || 'all'}.json`;
+        mime = 'application/json';
+    } else {
+        const headers = ['id','content','topic','tags','data_layer','confidence','created_at'];
+        const rows = data.entries.map(e => headers.map(h => `"${(e[h]||'').toString().replace(/"/g,'""')}"`).join(','));
+        content = headers.join(',') + '\n' + rows.join('\n');
+        filename = `uaml_export_${layer || 'all'}.csv`;
+        mime = 'text/csv';
+    }
+
+    const blob = new Blob([content], {type: mime});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+}
+</script>

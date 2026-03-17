@@ -1,0 +1,43 @@
+<div class="page-header">
+    <h1>🖥️ <span data-i18n="infrastructure.title">Infrastructure</span></h1>
+    <div class="subtitle" data-i18n="infrastructure.subtitle">Machines, services, and network topology</div>
+</div>
+
+<div id="machines-grid" class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+    <div class="loading">Loading infrastructure...</div>
+</div>
+
+<div class="card" style="margin-top: 24px;">
+    <h2>🔗 Network Topology</h2>
+    <div class="info-grid">
+        <div class="info-row"><strong>LAN Gateway:</strong> 192.168.1.254 (MikroTik)</div>
+        <div class="info-row"><strong>Subnets:</strong> 26× /24 private ranges</div>
+        <div class="info-row"><strong>SSH Tunnels:</strong> Notebook1 ↔ VPS (autossh, port 2203), Pepa-PC ↔ VPS</div>
+        <div class="info-row"><strong>NAS:</strong> QNAP NAS84553D (192.168.1.200) — 5×22TB RAID5 + 4×1TB SSD</div>
+        <div class="info-row"><strong>ANPR Cameras:</strong> 10.0.20.156 (SPZ-OUT), 10.0.20.162 (SPZ-IN)</div>
+    </div>
+</div>
+
+<script>
+fetch('/api/infrastructure').then(r => r.json()).then(data => {
+    const grid = document.getElementById('machines-grid');
+    grid.innerHTML = data.machines.map(m => `
+        <div class="card" style="margin-bottom: 0;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <h2 style="margin:0;">${escapeHtml(m.name)}</h2>
+                <span class="badge ${m.status === 'online' ? 'badge-knowledge' : 'badge-high'}">${m.status}</span>
+            </div>
+            <div class="info-grid">
+                <div class="info-row"><strong>Role:</strong> ${escapeHtml(m.role)}</div>
+                <div class="info-row"><strong>OS:</strong> ${escapeHtml(m.os)}</div>
+                <div class="info-row"><strong>IP:</strong> <code>${escapeHtml(m.ip)}</code></div>
+                <div class="info-row"><strong>HW:</strong> ${escapeHtml(m.hw)}</div>
+                <div class="info-row"><strong>Services:</strong></div>
+            </div>
+            <div style="margin-top:8px;">
+                ${m.services.map(s => `<span class="tag">${escapeHtml(s)}</span>`).join(' ')}
+            </div>
+        </div>
+    `).join('');
+});
+</script>

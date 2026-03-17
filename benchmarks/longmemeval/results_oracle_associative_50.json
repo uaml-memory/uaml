@@ -1,0 +1,19 @@
+{
+  "dataset": "oracle",
+  "mode": "associative",
+  "instances": 50,
+  "top_k": 5,
+  "overall": {
+    "retrieval_hit_rate": 0.1,
+    "exact_match_rate": 0.08,
+    "avg_ingest_ms": 0.6,
+    "avg_search_ms": 0.6
+  },
+  "by_type": {
+    "temporal-reasoning": {
+      "count": 50,
+      "retrieval_hit_rate": 0.1,
+      "exact_match_rate": 0.08
+    }
+  }
+}

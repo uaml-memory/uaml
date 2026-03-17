@@ -1,0 +1,353 @@
+<div class="page-header">
+    <h1 data-i18n="orchestration.title">🤖 Agent Orchestration Rules</h1>
+    <p class="subtitle" data-i18n="orchestration.subtitle">Multi-agent coordination rules per channel. Controls who can write what and when.</p>
+</div>
+
+<!-- Active Events -->
+<div class="card" id="active-events">
+    <h2 data-i18n="orchestration.active_events">⚡ Active Events</h2>
+    <p class="hint" data-i18n="orchestration.active_events_hint">Currently active claims, halts, and assignments.</p>
+    <div id="events-container">
+        <table class="data-table" id="events-table">
+            <thead>
+                <tr>
+                    <th data-i18n="orchestration.type">Type</th>
+                    <th data-i18n="orchestration.agent">Agent</th>
+                    <th data-i18n="orchestration.scope">Scope</th>
+                    <th data-i18n="orchestration.channel">Channel</th>
+                    <th data-i18n="orchestration.message">Message</th>
+                    <th data-i18n="orchestration.expires">Expires</th>
+                    <th data-i18n="orchestration.actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="events-body">
+                <tr><td colspan="7" class="empty-state" data-i18n="orchestration.no_events">No active events</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Channel Rules -->
+<div class="card" id="channel-rules">
+    <h2 data-i18n="orchestration.rules">📋 Coordination Rules</h2>
+    <div class="filter-bar" style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px;">
+        <label data-i18n="orchestration.filter_channel">Channel:</label>
+        <select id="channel-filter" class="filter-select" style="min-width: 200px;">
+            <option value="*" data-i18n="orchestration.all_channels">All Channels</option>
+        </select>
+        <label data-i18n="orchestration.filter_type">Type:</label>
+        <select id="type-filter" class="filter-select">
+            <option value="*" data-i18n="orchestration.all_types">All Types</option>
+            <option value="lock">🔒 Lock</option>
+            <option value="halt">🛑 Halt</option>
+            <option value="allow">✅ Allow</option>
+            <option value="notify">📢 Notify</option>
+            <option value="sanitize">🛡️ Sanitize</option>
+        </select>
+        <div style="flex:1"></div>
+        <button class="btn btn-primary" onclick="showAddRuleModal()" data-i18n="orchestration.add_rule">+ Add Rule</button>
+    </div>
+
+    <!-- Presets -->
+    <div style="margin-bottom: 16px; display: flex; gap: 8px;">
+        <span style="color: var(--text-muted); font-size: 13px;" data-i18n="orchestration.presets">Presets:</span>
+        <button class="btn btn-sm" onclick="loadPreset('conservative')" data-i18n="orchestration.conservative">🔒 Conservative</button>
+        <button class="btn btn-sm" onclick="loadPreset('standard')" data-i18n="orchestration.standard">⚖️ Standard</button>
+        <button class="btn btn-sm" onclick="loadPreset('permissive')" data-i18n="orchestration.permissive">🔓 Permissive</button>
+    </div>
+
+    <table class="data-table" id="rules-table">
+        <thead>
+            <tr>
+                <th data-i18n="orchestration.enabled">On</th>
+                <th data-i18n="orchestration.rule_type">Type</th>
+                <th data-i18n="orchestration.trigger">Trigger Pattern</th>
+                <th data-i18n="orchestration.action">Action</th>
+                <th data-i18n="orchestration.scope">Scope</th>
+                <th data-i18n="orchestration.channel">Channel</th>
+                <th data-i18n="orchestration.priority">Priority</th>
+                <th data-i18n="orchestration.description">Description</th>
+                <th data-i18n="orchestration.actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="rules-body">
+            <tr><td colspan="9" class="empty-state" data-i18n="orchestration.loading">Loading...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Add/Edit Rule Modal -->
+<div id="rule-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <h3 id="modal-title" data-i18n="orchestration.add_rule_title">Add Coordination Rule</h3>
+        <input type="hidden" id="rule-id">
+        <div class="form-group">
+            <label data-i18n="orchestration.rule_type">Type</label>
+            <select id="rule-type" class="filter-select">
+                <option value="lock">🔒 Lock — Block writes to claimed resources</option>
+                <option value="halt">🛑 Halt — Supervisor stop, block all writes</option>
+                <option value="allow">✅ Allow — Always allow (read-only)</option>
+                <option value="notify">📢 Notify — Release claimed resources</option>
+                <option value="sanitize">🛡️ Sanitize — Wrap untrusted input</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-i18n="orchestration.trigger">Trigger Pattern (regex)</label>
+            <input type="text" id="rule-trigger" class="form-input" placeholder="e.g. CLAIM|beru|I'll do">
+        </div>
+        <div class="form-group">
+            <label data-i18n="orchestration.action">Action</label>
+            <select id="rule-action" class="filter-select">
+                <option value="block_write">🚫 Block Write</option>
+                <option value="inject_warning">⚠️ Inject Warning</option>
+                <option value="pass">✅ Pass Through</option>
+                <option value="release">🔓 Release</option>
+                <option value="sanitize_input">🛡️ Sanitize Input</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-i18n="orchestration.scope">Scope</label>
+            <input type="text" id="rule-scope" class="form-input" value="*" placeholder="* or file pattern (tools/*.py)">
+        </div>
+        <div class="form-group">
+            <label data-i18n="orchestration.channel">Channel</label>
+            <input type="text" id="rule-channel" class="form-input" value="*" placeholder="* or discord:#general, email:*, webhook:*">
+        </div>
+        <div class="form-group">
+            <label data-i18n="orchestration.priority">Priority</label>
+            <select id="rule-priority" class="filter-select">
+                <option value="normal">Normal</option>
+                <option value="urgent">Urgent</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-i18n="orchestration.description">Description</label>
+            <input type="text" id="rule-desc" class="form-input" placeholder="What this rule does">
+        </div>
+        <div class="form-group" id="template-group" style="display:none;">
+            <label data-i18n="orchestration.template">Sanitize Template</label>
+            <textarea id="rule-template" class="form-input" rows="5" placeholder="⚠️ UNTRUSTED INPUT from {source} via {channel}.&#10;{content}"></textarea>
+            <p class="hint" data-i18n="orchestration.template_hint">Placeholders: {source}, {channel}, {content}</p>
+        </div>
+        <div class="modal-actions">
+            <button class="btn" onclick="closeModal()" data-i18n="orchestration.cancel">Cancel</button>
+            <button class="btn btn-primary" onclick="saveRule()" data-i18n="orchestration.save">Save Rule</button>
+        </div>
+    </div>
+</div>
+
+<style>
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+.modal-content { background: var(--card-bg, #1e1e2e); border: 1px solid var(--border, #333); border-radius: 12px; padding: 24px; max-width: 600px; width: 90%; }
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; margin-bottom: 4px; font-weight: 600; font-size: 13px; color: var(--text-muted); }
+.form-input { width: 100%; padding: 8px 12px; background: var(--input-bg, #161625); border: 1px solid var(--border, #333); border-radius: 6px; color: var(--text, #eee); font-size: 14px; }
+.form-input:focus { border-color: var(--primary, #4a9eff); outline: none; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+.btn-sm { padding: 4px 10px; font-size: 12px; }
+.badge-type { padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+.badge-lock { background: #3a3000; color: #ffd700; }
+.badge-halt { background: #3a0000; color: #ff4444; }
+.badge-allow { background: #003a00; color: #44ff44; }
+.badge-notify { background: #00243a; color: #44aaff; }
+.badge-sanitize { background: #2a003a; color: #cc44ff; }
+</style>
+
+<script>
+const API_BASE = '/api/v1/coordination';
+let allRules = [];
+let allEvents = [];
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', () => {
+    loadRules();
+    loadEvents();
+    document.getElementById('channel-filter').addEventListener('change', renderRules);
+    document.getElementById('type-filter').addEventListener('change', renderRules);
+    document.getElementById('rule-type').addEventListener('change', () => {
+        const isS = document.getElementById('rule-type').value === 'sanitize';
+        document.getElementById('template-group').style.display = isS ? 'block' : 'none';
+        if (isS) document.getElementById('rule-action').value = 'sanitize_input';
+    });
+    setInterval(loadEvents, 30000);
+});
+
+// ── Rules ──
+async function loadRules() {
+    try {
+        const r = await fetch(`${API_BASE}/rules`);
+        allRules = await r.json();
+        updateChannelFilter();
+        renderRules();
+    } catch(e) { console.error('Failed to load rules:', e); }
+}
+
+function updateChannelFilter() {
+    const sel = document.getElementById('channel-filter');
+    const channels = [...new Set(allRules.map(r => r.channel || '*'))].sort();
+    const val = sel.value;
+    sel.innerHTML = '<option value="*">All Channels</option>';
+    channels.filter(c => c !== '*').forEach(c => {
+        sel.innerHTML += `<option value="${c}">${c}</option>`;
+    });
+    sel.value = val;
+}
+
+function renderRules() {
+    const ch = document.getElementById('channel-filter').value;
+    const tp = document.getElementById('type-filter').value;
+    let filtered = allRules;
+    if (ch !== '*') filtered = filtered.filter(r => r.channel === ch);
+    if (tp !== '*') filtered = filtered.filter(r => r.rule_type === tp);
+
+    const tbody = document.getElementById('rules-body');
+    if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No rules match filters</td></tr>';
+        return;
+    }
+    tbody.innerHTML = filtered.map(r => `
+        <tr>
+            <td><input type="checkbox" ${r.enabled ? 'checked' : ''} onchange="toggleRule(${r.id}, this.checked)"></td>
+            <td><span class="badge-type badge-${r.rule_type}">${typeIcon(r.rule_type)} ${r.rule_type}</span></td>
+            <td><code>${escHtml(r.trigger_pattern || '')}</code></td>
+            <td>${r.action}</td>
+            <td><code>${escHtml(r.scope || '*')}</code></td>
+            <td><code>${escHtml(r.channel || '*')}</code></td>
+            <td>${r.priority === 'urgent' ? '🔴 Urgent' : '🟢 Normal'}</td>
+            <td>${escHtml(r.description || '')}</td>
+            <td>
+                <button class="btn btn-sm" onclick="editRule(${r.id})">✏️</button>
+                <button class="btn btn-sm" onclick="deleteRule(${r.id})" style="color:#ff4444;">🗑️</button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function typeIcon(t) {
+    return { lock:'🔒', halt:'🛑', allow:'✅', notify:'📢', sanitize:'🛡️' }[t] || '❓';
+}
+
+// ── Events ──
+async function loadEvents() {
+    try {
+        const r = await fetch(`${API_BASE}/events?active=true`);
+        allEvents = await r.json();
+        renderEvents();
+    } catch(e) { console.error('Failed to load events:', e); }
+}
+
+function renderEvents() {
+    const tbody = document.getElementById('events-body');
+    if (!allEvents.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No active events</td></tr>';
+        return;
+    }
+    tbody.innerHTML = allEvents.map(e => `
+        <tr>
+            <td><span class="badge-type badge-${e.signal_type}">${typeIcon(e.signal_type)} ${e.signal_type}</span></td>
+            <td>${escHtml(e.source_agent)}</td>
+            <td><code>${escHtml(e.scope || '*')}</code></td>
+            <td><code>${escHtml(e.channel || '*')}</code></td>
+            <td>${escHtml(e.message || '')}</td>
+            <td>${e.expires_at || '—'}</td>
+            <td><button class="btn btn-sm" onclick="resolveEvent(${e.id})" title="Resolve">✅</button></td>
+        </tr>
+    `).join('');
+}
+
+// ── CRUD ──
+function showAddRuleModal() {
+    document.getElementById('rule-id').value = '';
+    document.getElementById('modal-title').textContent = 'Add Coordination Rule';
+    document.getElementById('rule-type').value = 'lock';
+    document.getElementById('rule-trigger').value = '';
+    document.getElementById('rule-action').value = 'block_write';
+    document.getElementById('rule-scope').value = '*';
+    document.getElementById('rule-channel').value = '*';
+    document.getElementById('rule-priority').value = 'normal';
+    document.getElementById('rule-desc').value = '';
+    document.getElementById('rule-template').value = '';
+    document.getElementById('template-group').style.display = 'none';
+    document.getElementById('rule-modal').style.display = 'flex';
+}
+
+function editRule(id) {
+    const r = allRules.find(x => x.id === id);
+    if (!r) return;
+    document.getElementById('rule-id').value = r.id;
+    document.getElementById('modal-title').textContent = 'Edit Rule #' + r.id;
+    document.getElementById('rule-type').value = r.rule_type;
+    document.getElementById('rule-trigger').value = r.trigger_pattern || '';
+    document.getElementById('rule-action').value = r.action;
+    document.getElementById('rule-scope').value = r.scope || '*';
+    document.getElementById('rule-channel').value = r.channel || '*';
+    document.getElementById('rule-priority').value = r.priority || 'normal';
+    document.getElementById('rule-desc').value = r.description || '';
+    document.getElementById('rule-template').value = r.template || '';
+    document.getElementById('template-group').style.display = r.rule_type === 'sanitize' ? 'block' : 'none';
+    document.getElementById('rule-modal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('rule-modal').style.display = 'none';
+}
+
+async function saveRule() {
+    const id = document.getElementById('rule-id').value;
+    const data = {
+        rule_type: document.getElementById('rule-type').value,
+        trigger_pattern: document.getElementById('rule-trigger').value,
+        action: document.getElementById('rule-action').value,
+        scope: document.getElementById('rule-scope').value,
+        channel: document.getElementById('rule-channel').value,
+        priority: document.getElementById('rule-priority').value,
+        description: document.getElementById('rule-desc').value,
+        template: document.getElementById('rule-template').value || null,
+    };
+    const url = id ? `${API_BASE}/rules/${id}` : `${API_BASE}/rules`;
+    const method = id ? 'PUT' : 'POST';
+    try {
+        const r = await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+        if (r.ok) { closeModal(); loadRules(); }
+        else { alert('Error: ' + (await r.text())); }
+    } catch(e) { alert('Failed: ' + e); }
+}
+
+async function deleteRule(id) {
+    if (!confirm('Delete this rule?')) return;
+    try {
+        await fetch(`${API_BASE}/rules/${id}`, { method: 'DELETE' });
+        loadRules();
+    } catch(e) { alert('Failed: ' + e); }
+}
+
+async function toggleRule(id, enabled) {
+    try {
+        await fetch(`${API_BASE}/rules/${id}`, {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ enabled: enabled ? 1 : 0 })
+        });
+    } catch(e) { alert('Failed: ' + e); }
+}
+
+async function resolveEvent(id) {
+    try {
+        await fetch(`${API_BASE}/events/${id}/resolve`, { method: 'POST' });
+        loadEvents();
+    } catch(e) { alert('Failed: ' + e); }
+}
+
+async function loadPreset(name) {
+    if (!confirm(`Load "${name}" preset? This will replace current rules.`)) return;
+    try {
+        const r = await fetch(`${API_BASE}/presets/${name}`, { method: 'POST' });
+        if (r.ok) loadRules();
+        else alert('Error: ' + (await r.text()));
+    } catch(e) { alert('Failed: ' + e); }
+}
+
+function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>

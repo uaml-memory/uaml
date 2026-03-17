@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAML Dashboard</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <style>
+    /* Inline critical styles for faster first paint */
+    body { background: #0f1117; }
+    #app { height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Loading state -->
+    <div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:16px">
+      <div style="font-size:48px">🧠</div>
+      <div style="color:#94a3b8;font-family:Inter,sans-serif">Loading UAML Dashboard...</div>
+    </div>
+  </div>
+
+  <!-- Page namespace -->
+  <script>const Pages = {};</script>
+
+  <!-- Core -->
+  <script src="js/api.js"></script>
+  <script src="js/components.js"></script>
+
+  <!-- Pages -->
+  <script src="js/pages/dashboard.js"></script>
+  <script src="js/pages/knowledge.js"></script>
+  <script src="js/pages/tasks.js"></script>
+  <script src="js/pages/graph.js"></script>
+  <script src="js/pages/timeline.js"></script>
+  <script src="js/pages/compliance.js"></script>
+  <script src="js/pages/export.js"></script>
+  <script src="js/pages/settings.js"></script>
+
+  <!-- App (must be last — depends on Pages) -->
+  <script src="js/app.js"></script>
+
+  <script>
+    // Restore API URL from localStorage
+    const savedApiUrl = localStorage.getItem('uaml-api-url');
+    if (savedApiUrl) API.baseUrl = savedApiUrl;
+  </script>
+</body>
+</html>

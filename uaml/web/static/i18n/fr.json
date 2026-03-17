@@ -1,0 +1,125 @@
+{
+  "app_name": "UAML Tableau de bord",
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "knowledge": "Connaissances",
+    "tasks": "Tâches",
+    "graph": "Graphe",
+    "timeline": "Chronologie",
+    "projects": "Projets",
+    "infrastructure": "Infrastructure",
+    "team": "Équipe",
+    "compliance": "Conformité",
+    "export": "Export",
+    "settings": "Paramètres"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "subtitle": "Couche de mémoire universelle pour agents IA",
+    "knowledge_entries": "Entrées de connaissances",
+    "tasks": "Tâches",
+    "reasoning_traces": "Traces de raisonnement",
+    "data_layers": "Couches de données",
+    "quick_search": "Recherche rapide",
+    "search_placeholder": "Rechercher dans la base de connaissances...",
+    "recent_activity": "Activité récente",
+    "no_data": "Pas encore de données",
+    "no_results": "Aucun résultat trouvé",
+    "system": "Système",
+    "ai_agent": "Agent IA",
+    "versions": "Versions",
+    "machine": "Machine",
+    "os": "OS",
+    "arch": "Architecture",
+    "cpu": "CPU",
+    "cores": "cœurs",
+    "db_size": "Taille DB",
+    "search_btn": "Rechercher"
+  },
+  "knowledge": {
+    "title": "Connaissances",
+    "subtitle": "Parcourir et gérer les entrées de connaissances",
+    "search_placeholder": "Rechercher...",
+    "all_layers": "Toutes les couches",
+    "add_entry": "Ajouter une entrée",
+    "topic": "Sujet",
+    "content": "Contenu",
+    "layer": "Couche",
+    "confidence": "Confiance",
+    "created": "Créé",
+    "tags": "Tags",
+    "prev": "Précédent",
+    "next": "Suivant"
+  },
+  "tasks": {
+    "title": "Tâches",
+    "subtitle": "Gestion et suivi des tâches",
+    "add_task": "Ajouter une tâche",
+    "open": "Ouvertes",
+    "in_progress": "En cours",
+    "done": "Terminées",
+    "priority": "Priorité",
+    "assigned": "Assigné"
+  },
+  "projects": {
+    "title": "Projets",
+    "subtitle": "Groupes TODO et suivi des projets",
+    "search_placeholder": "Rechercher des projets...",
+    "no_projects": "Aucun projet trouvé",
+    "done_of_total": "terminé",
+    "status": "Statut",
+    "task": "Tâche",
+    "updated": "Mis à jour"
+  },
+  "infrastructure": {
+    "title": "Infrastructure",
+    "subtitle": "Machines, services et topologie réseau",
+    "network": "Topologie réseau",
+    "role": "Rôle",
+    "os": "SE",
+    "ip": "IP",
+    "hw": "Matériel",
+    "services": "Services"
+  },
+  "team": {
+    "title": "Équipe",
+    "subtitle": "Membres de l'équipe IA et leurs rôles",
+    "rules": "Règles de l'équipe",
+    "model": "Modèle",
+    "host": "Hôte"
+  },
+  "compliance": {
+    "title": "Conformité",
+    "subtitle": "État de conformité RGPD et ISO 27001"
+  },
+  "export": {
+    "title": "Export / Import",
+    "subtitle": "Export de données, import et gestion des sauvegardes"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Configuration système et référence API"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "search": "Rechercher",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "close": "Fermer",
+    "api_connected": "API connectée",
+    "machine": "Machine",
+    "language": "Langue",
+    "agent": "Agent",
+    "model": "Modèle",
+    "no_data": "Pas de données",
+    "no_results": "Aucun résultat",
+    "error": "Impossible de charger"
+  },
+  "timeline": {
+    "title": "Chronologie"
+  },
+  "graph": {
+    "title": "Graphe"
+  }
+}

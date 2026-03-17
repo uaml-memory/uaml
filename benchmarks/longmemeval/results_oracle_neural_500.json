@@ -1,0 +1,3036 @@
+{
+  "mode": "neural_hybrid",
+  "model": "paraphrase-multilingual-MiniLM-L12-v2",
+  "total": 500,
+  "hits": 111,
+  "hit_rate": 22.2,
+  "elapsed_s": 12.9,
+  "type_stats": {
+    "temporal-reasoning": {
+      "hits": 44,
+      "total": 133
+    },
+    "multi-session": {
+      "hits": 18,
+      "total": 133
+    },
+    "knowledge-update": {
+      "hits": 32,
+      "total": 78
+    },
+    "single-session-preference": {
+      "hits": 0,
+      "total": 30
+    },
+    "single-session-assistant": {
+      "hits": 6,
+      "total": 56
+    },
+    "single-session-user": {
+      "hits": 11,
+      "total": 70
+    }
+  },
+  "results": [
+    {
+      "id": 0,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 1,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 2,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 3,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 4,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 5,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 6,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 7,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 8,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 9,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 10,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 11,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 12,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 13,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 14,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 15,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 16,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 17,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 18,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 19,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 20,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 21,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 22,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 23,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 24,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 25,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 26,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 27,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 28,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 29,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 30,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 31,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 32,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 33,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 34,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 35,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 36,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 37,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 38,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 39,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 40,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 41,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 42,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 43,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 44,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 45,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 46,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 47,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 48,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 49,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 50,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 51,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 52,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 53,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 54,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 55,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 56,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 57,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 58,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 59,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 60,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 61,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 62,
+      "type": "multi-session",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 63,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 64,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 65,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 66,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 67,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 68,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 69,
+      "type": "multi-session",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 70,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 71,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 72,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 73,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 74,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 75,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 76,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 77,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 78,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 79,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 80,
+      "type": "multi-session",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 81,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 82,
+      "type": "multi-session",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 83,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 84,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 85,
+      "type": "multi-session",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 86,
+      "type": "multi-session",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 87,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 88,
+      "type": "multi-session",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 89,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 90,
+      "type": "multi-session",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 91,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 92,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 93,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 94,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 95,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 96,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 97,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 98,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 99,
+      "type": "multi-session",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 100,
+      "type": "multi-session",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 101,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 102,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 103,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 104,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 105,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 106,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 107,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 108,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 109,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 110,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 111,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 112,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 113,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 114,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 115,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 116,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 117,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 118,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 119,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 120,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 121,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 122,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 123,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 124,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 125,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 126,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 127,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 128,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 129,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 130,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 131,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 132,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 133,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 134,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 135,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 136,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 137,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 138,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 139,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 140,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 141,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 142,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 143,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 144,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 145,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 146,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 147,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 148,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 149,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 150,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 151,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 152,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 153,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 154,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 155,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 156,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 157,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 158,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 159,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 160,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 161,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 162,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 163,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 164,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 165,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 166,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 167,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 168,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 169,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 170,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 171,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 172,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 173,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 174,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 175,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 176,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 177,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 178,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 179,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 180,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 181,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 182,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 183,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 184,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 185,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 186,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 187,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 188,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 189,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 190,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 191,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 192,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 193,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 194,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 195,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 196,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 197,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 198,
+      "type": "knowledge-update",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 199,
+      "type": "knowledge-update",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 200,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 201,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 202,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 203,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 204,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 205,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 206,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 207,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 208,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 209,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 210,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 211,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 212,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 213,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 214,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 215,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 216,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 217,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 218,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 219,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 220,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 221,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 222,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 223,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 224,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 225,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 226,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 227,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 228,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 229,
+      "type": "single-session-preference",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 230,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 231,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 232,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 233,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 234,
+      "type": "single-session-assistant",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 235,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 236,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 237,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 238,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 239,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 240,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 241,
+      "type": "single-session-assistant",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 242,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 243,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 244,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 245,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 246,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 247,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 248,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 249,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 250,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 251,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 252,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 253,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 254,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 255,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 256,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 257,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 258,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 259,
+      "type": "single-session-assistant",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 260,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 261,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 262,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 263,
+      "type": "single-session-assistant",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 264,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 265,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 266,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 267,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 268,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 269,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 270,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 271,
+      "type": "single-session-assistant",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 272,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 273,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 274,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 275,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 276,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 277,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 278,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 279,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 280,
+      "type": "single-session-assistant",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 281,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 282,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 283,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 284,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 285,
+      "type": "single-session-assistant",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 286,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 287,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 288,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 289,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 290,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 291,
+      "type": "single-session-user",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 292,
+      "type": "single-session-user",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 293,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 294,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 295,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 296,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 297,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 298,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 299,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 300,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 301,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 302,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 303,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 304,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 305,
+      "type": "single-session-user",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 306,
+      "type": "single-session-user",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 307,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 308,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 309,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 310,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 311,
+      "type": "single-session-user",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 312,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 313,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 314,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 315,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 316,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 317,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 318,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 319,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 320,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 321,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 322,
+      "type": "single-session-user",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 323,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 324,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 325,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 326,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 327,
+      "type": "single-session-user",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 328,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 329,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 330,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 331,
+      "type": "single-session-user",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 332,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 333,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 334,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 335,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 336,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 337,
+      "type": "single-session-user",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 338,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 339,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 340,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 341,
+      "type": "single-session-user",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 342,
+      "type": "single-session-user",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 343,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 344,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 345,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 346,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 347,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 348,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 349,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 350,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 351,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 352,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 353,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 354,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 355,
+      "type": "single-session-user",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 356,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 357,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 358,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 359,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 360,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 361,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 362,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 363,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 364,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 365,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 366,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 367,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 368,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 369,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 370,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 371,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 372,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 373,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 374,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 375,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 376,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 377,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 378,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 379,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 380,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 381,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 382,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 383,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 384,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 385,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 386,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 387,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 388,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 389,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 390,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 391,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 392,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 393,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 394,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 395,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 396,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 397,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 398,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 399,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 400,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 401,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 402,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 403,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 404,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 405,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 406,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 407,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 408,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 409,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 410,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 411,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 412,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 413,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 414,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 415,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 416,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 417,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 418,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 419,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 420,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 421,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 422,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 423,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 424,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 425,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 426,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 427,
+      "type": "temporal-reasoning",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 428,
+      "type": "temporal-reasoning",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 429,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 430,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 431,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 432,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 433,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 434,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 435,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 436,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 437,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 438,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 439,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 440,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 441,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 442,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 443,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 444,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 445,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 446,
+      "type": "multi-session",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 447,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 448,
+      "type": "multi-session",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 449,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 450,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 451,
+      "type": "multi-session",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 452,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 453,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 454,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 455,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 456,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 457,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 458,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 459,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 460,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 461,
+      "type": "multi-session",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 462,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 463,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 464,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 465,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 466,
+      "type": "multi-session",
+      "hit": true,
+      "exact": false
+    },
+    {
+      "id": 467,
+      "type": "multi-session",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 468,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 469,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 470,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 471,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 472,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 473,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 474,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 475,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 476,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 477,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 478,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 479,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 480,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 481,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 482,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 483,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 484,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 485,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 486,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 487,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 488,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 489,
+      "type": "multi-session",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 490,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 491,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 492,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 493,
+      "type": "multi-session",
+      "hit": true,
+      "exact": true
+    },
+    {
+      "id": 494,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 495,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 496,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 497,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 498,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    },
+    {
+      "id": 499,
+      "type": "multi-session",
+      "hit": false,
+      "exact": false
+    }
+  ]
+}

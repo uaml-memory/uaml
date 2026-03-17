@@ -1,0 +1,347 @@
+# UAML — Universal Agent Memory Layer
+
+**Persistent, temporal, ethical memory for AI agents.**
+
+Give your AI agent a real memory — one that persists across sessions, respects time, isolates client data, and works with any framework.
+
+## Quick Start
+
+```bash
+pip install uaml
+uaml init
+uaml learn "Python GIL prevents true multithreading" --topic python
+uaml search "GIL threading"
+uaml serve  # Start MCP server for Claude, Cursor, etc.
+```
+
+## Why UAML?
+
+Most AI agents are amnesiacs. They lose context between sessions, mix up client data, and can't answer "what did we know last Tuesday?"
+
+UAML fixes this:
+
+| Feature | UAML | Vector DB | Flat files |
+|---------|------|-----------|------------|
+| Full-text search | ✅ FTS5 | ❌ Semantic only | ❌ grep |
+| Temporal queries | ✅ Point-in-time | ❌ | ❌ |
+| Client isolation | ✅ Built-in | ❌ Manual | ❌ Manual |
+| Deduplication | ✅ Content hash | ❌ | ❌ |
+| Audit trail | ✅ Every operation | ❌ | ❌ |
+| Zero dependencies | ✅ SQLite stdlib | ❌ Server needed | ✅ |
+| MCP server | ✅ stdio + HTTP | ❌ | ❌ |
+
+## Features
+
+- **SQLite + FTS5** — Fast full-text search, zero external dependencies, single-file database
+- **Temporal queries** — "What was valid at time X?" (killer feature for legal/compliance)
+- **Client isolation** — Per-client data separation for regulated industries (GDPR, legal, finance)
+- **Multi-agent support** — Private and shared knowledge tiers with agent attribution
+- **Content deduplication** — SHA-256 hash prevents duplicate entries
+- **Audit trail** — Every learn/search operation logged with agent ID and timestamp
+- **MCP server** — Works with Claude Desktop, Cursor, OpenClaw, or any MCP-compatible client
+- **Two transports** — stdio (local) and HTTP (remote/shared)
+- **CLI included** — `uaml init`, `uaml learn`, `uaml search`, `uaml stats`, `uaml serve`
+
+- **Ethics pipeline** — 8 rules (3 hard/reject, 5 soft/flag), 3 modes (enforce/warn/off), YAML import/export
+- **Task management** — Create, assign, track tasks with priorities, subtasks, and FTS5 search
+- **Export/Import** — JSONL format, selective filters (topic/project/client/layer), identity protection
+- **Ingestors** — Chat sessions (JSONL), Markdown (with heading split), Web pages (HTML stripping + chunking)
+- **5-layer DataLayer** — Identity / Knowledge / Team / Operational / Project with per-layer access control
+- **Source origin tracking** — external / generated / derived / observed metadata on every entry
+
+### v1.0 — Full Stack
+
+- **UAML Facade** — Single entry point: `from uaml.facade import UAML` with lazy module init
+- **Context Builder** — LLM-optimized context assembly with token budgeting and dedup
+- **Knowledge Scoring** — Multi-dimensional quality scoring (completeness, freshness, confidence)
+- **Knowledge Clustering** — Jaccard similarity clustering with outlier detection
+- **Conflict Resolution** — Detect contradictions, resolve via strategies (keep_newest, merge, etc.)
+- **Query Optimizer** — Abbreviation expansion, normalization, synonym suggestions
+- **Search Analytics** — Query tracking, latency stats, zero-result rate analysis
+- **Search Cache** — LRU cache with TTL for repeated queries
+- **Knowledge Summarizer** — Topic summaries, store overview, entry compression
+- **Knowledge Linker** — Auto-suggest links by content/topic overlap
+- **Entity Extraction** — Regex NER for persons, organizations, locations, dates, emails
+- **Temporal Reasoning** — Timeline, stale detection, conflict analysis, freshness scoring
+- **Event Sourcing** — Append-only event log with replay and listeners
+- **Ingest Pipeline** — Multi-stage ingestion with custom validation stages
+- **Retention Policies** — Lifecycle rules (archive, delete, reduce_confidence, flag_review)
+- **Backup Manager** — Create/verify/list/rotate/restore with gzip compression
+- **RBAC** — Role-based access control with permissions and grants
+- **Rate Limiter** — Token bucket per-agent/operation protection
+- **Data Sanitizer** — PII detection and redaction (email, phone, IP, CC, API keys)
+- **Provenance Tracking** — Full lineage: origin, transforms, agent contributions
+- **Data Inventory** — GDPR Art. 30 processing records with compliance checks
+- **Knowledge Validation** — Content quality, metadata completeness, schema compliance
+- **Tag Manager** — Bulk tag operations, tag cloud, rename, normalization
+- **Snapshot Manager** — Point-in-time snapshots with diff comparison
+- **Knowledge Templates** — Predefined entry templates with validation
+- **Embedding Engine** — Pluggable embedding abstraction with cosine similarity
+- **Changelog Generator** — Audit-based changelog with markdown export
+- **Inter-agent Messaging** — Typed messages, handlers, threading, reply chains
+- **Notification Center** — Event subscriptions with throttling
+- **Health Checker** — DB integrity, storage, audit trail, knowledge quality
+- **Maintenance Scheduler** — Periodic task scheduling with error tracking
+- **Auto-Tagger** — Topic detection, keyword extraction, pattern matching
+- **Export Formatter** — JSON, JSONL, CSV, Markdown with filtering
+- **Config Manager** — Centralized config with dot-path access and env overrides
+- **Plugin System** — Hook-based plugin manager for extensibility
+- **Local Knowledge Graph** — SQLite-based graph without Neo4j dependency
+- **Federation Hub** — Multi-agent knowledge sharing with identity protection
+- **Neo4j integration** — Graph sync with dual-DB architecture (`pip install uaml[neo4j]`)
+- **PQC encryption** — ML-KEM-768 post-quantum cryptography (`pip install uaml[pqc]`)
+- **REST API** — Full CRUD + search + timeline + graph endpoints
+- **Policy engine** — Query classification, recall tiers, token budget control
+- **Compliance auditor** — Automated GDPR + ISO 27001 checks
+- **Voice pipeline** — TTS (Piper) + STT (Whisper) for edge deployments
+
+## Usage
+
+### Facade API (recommended for v1.0+)
+
+```python
+from uaml.facade import UAML
+
+uaml = UAML("knowledge.db", agent_id="my-agent")
+
+# Store and search
+uaml.learn("Python's GIL prevents true threading", topic="python")
+results = uaml.search("threading")
+
+# Build LLM context with token budgeting
+ctx = uaml.context("What about Python threading?", max_tokens=2000)
+print(ctx.text)  # Ready for prompt injection
+
+# Quality scoring
+score = uaml.score(entry_id=1)
+print(f"Quality: {score.overall:.0%}")
+
+# Detect conflicts
+conflicts = uaml.detect_conflicts()
+
+# PII sanitization
+clean = uaml.sanitize("Email me at john@example.com")
+# → "Email me at [EMAIL_REDACTED]"
+
+# Backup and health
+uaml.backup()
+health = uaml.health_check()
+
+# Store overview
+overview = uaml.overview()
+print(overview.to_markdown())
+
+uaml.close()
+```
+
+### Low-Level API
+
+```python
+from uaml import MemoryStore
+
+# Create or open a memory database
+store = MemoryStore("my_agent.db", agent_id="agent-1")
+
+# Store knowledge
+store.learn(
+    "GDPR requires data protection by design",
+    topic="legal",
+    tags="gdpr,privacy",
+    valid_from="2018-05-25",
+    client_ref="client-acme",
+    confidence=0.95,
+)
+
+# Search
+results = store.search("data protection", limit=5)
+for r in results:
+    print(f"[{r.score:.2f}] {r.entry.content}")
+
+# Temporal query — what was valid on a specific date?
+results = store.point_in_time("privacy law", "2017-01-01")
+
+# Client-isolated search — only returns data for this client
+results = store.search("contract", client_ref="client-acme")
+
+# Statistics
+print(store.stats())
+
+store.close()
+```
+
+### MCP Server (for Claude, Cursor, etc.)
+
+**stdio transport** (local, recommended):
+```bash
+uaml serve --db my_agent.db
+```
+
+**HTTP transport** (remote access):
+```bash
+uaml serve --db my_agent.db --transport http --port 8768 --host 127.0.0.1
+```
+
+#### Claude Desktop Configuration
+
+Add to `claude_desktop_config.json`:
+```json
+{
+  "mcpServers": {
+    "uaml": {
+      "command": "uaml",
+      "args": ["serve", "--db", "/path/to/memory.db"]
+    }
+  }
+}
+```
+
+#### MCP Tools Available
+
+| Tool | Description |
+|------|-------------|
+| `memory_search` | Full-text search with temporal and client isolation filters |
+| `memory_learn` | Store new knowledge with metadata, dedup, and audit |
+| `memory_entity` | Look up entities and their knowledge connections |
+| `memory_stats` | Database statistics (counts, topics, agents) |
+| `memory_ethics_check` | Check content against ethics rules |
+| `task_create` | Create a new task |
+| `task_list` | List tasks with filters |
+| `task_update` | Update task status/fields |
+
+#### MCP Resources
+
+| URI | Description |
+|-----|-------------|
+| `uaml://stats` | Live database statistics |
+| `uaml://schema` | Schema version and table structure |
+
+### CLI
+
+```bash
+# Initialize a new database
+uaml init --db project.db
+
+# Store knowledge
+uaml learn "React 19 uses a compiler" --topic frontend --tags "react,compiler"
+
+# Search with filters
+uaml search "compiler" --topic frontend --limit 10
+uaml search "privacy" --at-time 2020-01-01 --client acme
+
+# JSON output (for piping)
+uaml search "GIL" --json-output
+
+# Statistics
+uaml stats --db project.db
+
+# Ethics check
+uaml ethics check "Some content to validate"
+uaml ethics rules  # Show all rules
+
+# Task management
+uaml task add "Implement feature X" --project myapp --assigned agent-1
+uaml task list --status todo
+uaml task done 42
+
+# Export / Import
+uaml io export --topic python -o python_knowledge.jsonl
+uaml io export --client "client-A" -o audit.jsonl
+uaml io import backup.jsonl --override-agent new-agent
+
+# Ingest data
+uaml ingest chat session.jsonl --topic ai --project uaml
+uaml ingest md docs/ --heading-level 2 --recursive
+uaml ingest web https://example.com --chunk-size 4000
+```
+
+## Architecture
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│ Claude      │     │ Your Agent  │     │ LangChain   │
+│ Desktop     │     │ Framework   │     │ / AutoGen   │
+└──────┬──────┘     └──────┬──────┘     └──────┬──────┘
+       │ MCP                │ Facade API        │ Adapter
+       ▼                    ▼                   ▼
+┌──────────────────────────────────────────────────────┐
+│                 UAML Facade (lazy init)              │
+├──────────────────────────────────────────────────────┤
+│  Core          │  Reasoning      │  Security        │
+│  ┌───────────┐ │  ┌────────────┐ │  ┌─────────────┐ │
+│  │ Store     │ │  │ Context    │ │  │ RBAC        │ │
+│  │ Config    │ │  │ Scoring    │ │  │ Sanitizer   │ │
+│  │ Events    │ │  │ Clustering │ │  │ RateLimiter │ │
+│  │ Retention │ │  │ Conflicts  │ │  │ Hardening   │ │
+│  │ Snapshot  │ │  │ Summarizer │ │  └─────────────┘ │
+│  │ Tagging   │ │  │ Optimizer  │ │                  │
+│  │ Scheduler │ │  │ Analytics  │ │  Compliance      │
+│  │ Dedup     │ │  │ Entities   │ │  ┌─────────────┐ │
+│  │ Templates │ │  │ Temporal   │ │  │ Auditor     │ │
+│  │ Batch     │ │  │ Linker     │ │  │ DPIA        │ │
+│  │ Health    │ │  │ Cache      │ │  │ Inventory   │ │
+│  └───────────┘ │  └────────────┘ │  │ Consent     │ │
+│                │                 │  └─────────────┘ │
+│  I/O           │  Federation     │                  │
+│  ┌───────────┐ │  ┌────────────┐ │  Audit          │
+│  │ Backup    │ │  │ Hub        │ │  ┌─────────────┐ │
+│  │ Export    │ │  │ Messaging  │ │  │ AuditLog    │ │
+│  │ Import    │ │  └────────────┘ │  │ Access      │ │
+│  │ Formats   │ │                 │  │ Provenance  │ │
+│  └───────────┘ │  Plugins        │  └─────────────┘ │
+│                │  ┌────────────┐ │                  │
+│  Graph         │  │ Manager    │ │  Voice           │
+│  ┌───────────┐ │  └────────────┘ │  ┌─────────────┐ │
+│  │ LocalGraph│ │                 │  │ TTS / STT   │ │
+│  └───────────┘ │                 │  └─────────────┘ │
+├──────────────────────────────────────────────────────┤
+│              SQLite + FTS5 (single file)             │
+└──────────────────────────────────────────────────────┘
+```
+
+UAML is **framework-agnostic**. Use it with OpenClaw, LangChain, CrewAI, AutoGen, or your own agent.
+
+**1000+ tests** ensure reliability across all modules.
+
+## Data Model
+
+Each knowledge entry has:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `content` | text | The knowledge content |
+| `topic` | text | Category/topic |
+| `summary` | text | Short summary |
+| `source_type` | enum | manual, chat, web_page, research, document, ... |
+| `source_ref` | text | URL, file path, session ID |
+| `tags` | text | Comma-separated tags |
+| `confidence` | float | 0.0–1.0 confidence score |
+| `access_level` | enum | public, internal, confidential, restricted |
+| `trust_level` | enum | verified, unverified, disputed |
+| `valid_from` | datetime | Temporal validity start |
+| `valid_until` | datetime | Temporal validity end |
+| `client_ref` | text | Client ID for data isolation |
+| `project` | text | Project name |
+| `agent_id` | text | Which agent created this |
+| `data_layer` | enum | identity, knowledge, team, operational, project |
+| `source_origin` | enum | external, generated, derived, observed |
+| `content_hash` | text | SHA-256 for deduplication |
+
+## Requirements
+
+- Python 3.10+
+- No external dependencies (SQLite is in stdlib)
+
+## License
+
+**Proprietary Software** — Copyright (c) 2026 GLG, a.s. All rights reserved.
+
+- **Personal use:** Free (Community plan — limited features)
+- **Commercial use:** Requires an active paid subscription from GLG, a.s.
+- Features are unlocked based on your subscription tier (Starter / Professional / Team / Enterprise)
+- Upon subscription expiration, paid features lock; your data is preserved
+
+⚠️ All features are experimental and under active development. Use at your own risk.
+
+Contact for commercial licensing: [info@uaml.ai](mailto:info@uaml.ai) | [uaml-memory.com](https://uaml-memory.com)
+
+See [LICENSE](LICENSE) for full terms.

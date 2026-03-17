@@ -1,0 +1,312 @@
+<div class="page-header">
+    <h1 data-i18n="input_filter.title">📥 Input Filter</h1>
+    <p class="subtitle" data-i18n="input_filter.subtitle">Rules for filtering data before storage in Neo4j. Changes are logged to audit trail.</p>
+</div>
+
+<div class="card" id="data-categories">
+    <h2 data-i18n="input_filter.data_categories">📂 Data Categories</h2>
+    <p class="hint" data-i18n="input_filter.data_categories_hint">Control what types of data are allowed into the knowledge graph.</p>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th data-i18n="input_filter.category">Category</th>
+                <th data-i18n="input_filter.behavior">Behavior</th>
+                <th data-i18n="input_filter.description">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>👤 <span data-i18n="input_filter.personal">Personal data</span></td>
+                <td>
+                    <select id="cat-personal" class="filter-select" data-key="categories.personal">
+                        <option value="allow" data-i18n="input_filter.allow">Allow</option>
+                        <option value="encrypt" data-i18n="input_filter.encrypt">Encrypt</option>
+                        <option value="deny" data-i18n="input_filter.deny">Deny</option>
+                        <option value="require_consent" selected data-i18n="input_filter.require_consent">Require consent</option>
+                    </select>
+                </td>
+                <td class="hint" data-i18n="input_filter.gdpr_art6">GDPR Art. 6 — requires legal basis</td>
+            </tr>
+            <tr>
+                <td>💰 <span data-i18n="input_filter.financial">Financial data</span></td>
+                <td>
+                    <select id="cat-financial" class="filter-select" data-key="categories.financial">
+                        <option value="allow">Allow</option>
+                        <option value="encrypt" selected>Encrypt</option>
+                        <option value="deny">Deny</option>
+                        <option value="require_consent">Require consent</option>
+                    </select>
+                </td>
+                <td class="hint" data-i18n="input_filter.encrypted_rest">Banking, transactions — encrypted at rest</td>
+            </tr>
+            <tr>
+                <td>🏥 <span data-i18n="input_filter.health">Health data</span></td>
+                <td>
+                    <select id="cat-health" class="filter-select" data-key="categories.health">
+                        <option value="allow">Allow</option>
+                        <option value="encrypt">Encrypt</option>
+                        <option value="deny" selected>Deny</option>
+                        <option value="require_consent">Require consent</option>
+                    </select>
+                </td>
+                <td class="hint" data-i18n="input_filter.gdpr_art9">GDPR Art. 9 special category — denied by default</td>
+            </tr>
+            <tr>
+                <td>🏢 <span data-i18n="input_filter.company">Company data</span></td>
+                <td>
+                    <select id="cat-company" class="filter-select" data-key="categories.company">
+                        <option value="allow" selected>Allow</option>
+                        <option value="encrypt">Encrypt</option>
+                        <option value="deny">Deny</option>
+                        <option value="require_consent">Require consent</option>
+                    </select>
+                </td>
+                <td class="hint" data-i18n="input_filter.business_info">Business information</td>
+            </tr>
+            <tr>
+                <td>🌐 <span data-i18n="input_filter.public">Public data</span></td>
+                <td>
+                    <select id="cat-public" class="filter-select" data-key="categories.public">
+                        <option value="allow" selected>Allow</option>
+                        <option value="encrypt">Encrypt</option>
+                        <option value="deny">Deny</option>
+                        <option value="require_consent">Require consent</option>
+                    </select>
+                </td>
+                <td class="hint" data-i18n="input_filter.public_data">Publicly available data</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="card" id="quality-gates">
+    <h2 data-i18n="input_filter.quality_gates">⚙️ Quality Gates</h2>
+    <p class="hint" data-i18n="input_filter.quality_gates_hint">Measurable rules for data quality before storage.</p>
+    <div class="params-grid">
+        <div class="param-card">
+            <label data-i18n="input_filter.min_relevance">Min relevance for storage</label> <span class="cert-badge">🔒</span>
+            <input type="range" id="input-min-relevance" min="0" max="1" step="0.05" value="0.7"
+                   oninput="this.nextElementSibling.textContent=this.value">
+            <span class="param-value">0.7</span>
+            <small class="hint" data-i18n="input_filter.below_threshold">Below this threshold → not stored</small>
+        </div>
+        <div class="param-card">
+            <label data-i18n="input_filter.max_duplicate">Max duplicate similarity</label>
+            <input type="range" id="input-dedup" min="0.8" max="1" step="0.01" value="0.95"
+                   oninput="this.nextElementSibling.textContent=this.value">
+            <span class="param-value">0.95</span>
+            <small class="hint" data-i18n="input_filter.above_threshold">Above this → rejected as duplicate</small>
+        </div>
+        <div class="param-card">
+            <label data-i18n="input_filter.max_entry_tokens">Max entry size (tokens)</label> <span class="cert-badge">🔒</span>
+            <input type="range" id="input-max-tokens" min="100" max="10000" step="100" value="2000"
+                   oninput="this.nextElementSibling.textContent=this.value">
+            <span class="param-value">2000</span>
+            <small class="hint" data-i18n="input_filter.larger_rejected">Larger records are truncated or rejected</small>
+        </div>
+        <div class="param-card">
+            <label data-i18n="input_filter.ttl_days">TTL (days)</label>
+            <input type="number" id="input-ttl" min="30" max="3650" value="730" style="width:100px">
+            <small class="hint" data-i18n="input_filter.auto_expire">Auto-expire records after this many days</small>
+        </div>
+        <div class="param-card">
+            <label data-i18n="input_filter.min_length">Min record length (chars)</label>
+            <input type="number" id="input-min-length" min="1" max="1000" value="10" style="width:100px">
+            <small class="hint" data-i18n="input_filter.shorter_rejected">Shorter records are rejected</small>
+        </div>
+        <div class="param-card">
+            <label data-i18n="input_filter.rate_limit">Rate limit (writes/min)</label>
+            <input type="number" id="input-rate-limit" min="1" max="10000" value="100" style="width:100px">
+            <small class="hint" data-i18n="input_filter.max_rate">Max ingestion rate</small>
+        </div>
+    </div>
+</div>
+
+<div class="card" id="switches">
+    <h2 data-i18n="input_filter.switches">🔘 Switches</h2>
+    <div class="switch-grid">
+        <label class="switch-label">
+            <input type="checkbox" id="input-classification" checked>
+            <span data-i18n="input_filter.require_classification">Required classification — every record must have ≥1 category tag</span>
+        </label>
+        <label class="switch-label">
+            <input type="checkbox" id="input-pii" checked>
+            <span data-i18n="input_filter.pii_detection">PII detection — auto-scan for emails, phone numbers, IDs</span>
+        </label>
+    </div>
+</div>
+
+<div class="card" id="saved-configs">
+    <h2>💾 Saved Configurations</h2>
+    <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:12px;">
+        <select id="saved-config-select" style="flex:1; min-width:200px; padding:6px 10px; border-radius:6px; border:1px solid var(--border); background:var(--bg-card); color:var(--text);">
+            <option value="">— Select configuration —</option>
+        </select>
+        <button class="btn btn-primary btn-sm" onclick="loadSavedConfig()">📂 Load</button>
+        <button class="btn btn-sm" style="background:var(--danger);color:#fff;" onclick="deleteSavedConfig()">🗑️ Smazat</button>
+    </div>
+    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <input type="text" id="save-config-name" placeholder="Configuration name..."
+               style="flex:1; min-width:200px; padding:6px 10px; border-radius:6px; border:1px solid var(--border); background:var(--bg-card); color:var(--text);">
+        <input type="text" id="save-config-desc" placeholder="Description (optional)..."
+               style="flex:1; min-width:150px; padding:6px 10px; border-radius:6px; border:1px solid var(--border); background:var(--bg-card); color:var(--text);">
+        <button class="btn btn-primary btn-sm" onclick="saveAsConfig()">💾 Save as...</button>
+    </div>
+    <div id="active-config-info" style="margin-top:8px; font-size:0.85em; color:var(--text-muted);"></div>
+</div>
+
+<div class="actions-bar">
+    <button class="btn btn-primary" onclick="saveInputFilter()">💾 Save Input Filter</button>
+    <button class="btn btn-secondary" onclick="resetInputFilter()">↩️ Reset to Defaults</button>
+</div>
+
+<script>
+async function saveInputFilter() {
+    const config = buildInputConfig();
+    try {
+        const resp = await fetch('/api/v1/focus-config', {
+            method: 'PUT', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(config)
+        });
+        if (resp.ok) alert('✅ Saved');
+        else alert('❌ Chyba: ' + (await resp.text()));
+    } catch(e) { alert('❌ ' + e.message); }
+}
+
+async function resetInputFilter() {
+    if (!confirm('Reset?')) return;
+    location.reload();
+}
+
+function buildInputConfig() {
+    const config = { input_filter: {
+        min_relevance_score: parseFloat(document.getElementById('input-min-relevance').value),
+        max_duplicate_similarity: parseFloat(document.getElementById('input-dedup').value),
+        max_entry_tokens: parseInt(document.getElementById('input-max-tokens').value),
+        ttl_days: parseInt(document.getElementById('input-ttl').value),
+        min_record_length: parseInt(document.getElementById('input-min-length').value),
+        rate_limit_per_min: parseInt(document.getElementById('input-rate-limit').value),
+        require_classification: document.getElementById('input-classification').checked,
+        pii_detection: document.getElementById('input-pii').checked,
+        categories: {}
+    }};
+    document.querySelectorAll('.filter-select').forEach(sel => {
+        const key = sel.dataset.key.split('.')[1];
+        config.input_filter.categories[key] = sel.value;
+    });
+    return config;
+}
+
+function applyInputConfig(inp) {
+    const setSlider = (id, val) => { const el = document.getElementById(id); if(el && val!==undefined) { el.value=val; if(el.nextElementSibling) el.nextElementSibling.textContent=val; }};
+    setSlider('input-min-relevance', inp.min_relevance_score);
+    setSlider('input-dedup', inp.max_duplicate_similarity || inp.dedup_threshold);
+    setSlider('input-max-tokens', inp.max_entry_tokens);
+    if(inp.ttl_days) document.getElementById('input-ttl').value = inp.ttl_days;
+    if(inp.min_record_length || inp.min_entry_length) document.getElementById('input-min-length').value = inp.min_record_length || inp.min_entry_length;
+    if(inp.rate_limit_per_min) document.getElementById('input-rate-limit').value = inp.rate_limit_per_min;
+    if(inp.require_classification !== undefined) document.getElementById('input-classification').checked = inp.require_classification;
+    if(inp.pii_detection !== undefined) document.getElementById('input-pii').checked = inp.pii_detection;
+    if(inp.categories) Object.entries(inp.categories).forEach(([k,v]) => { const sel = document.getElementById('cat-'+k); if(sel) sel.value=v; });
+}
+
+(async function() {
+    try {
+        const resp = await fetch('/api/v1/focus-config');
+        const config = await resp.json();
+        if (config.input_filter) applyInputConfig(config.input_filter);
+    } catch(e) { console.warn('Config load error:', e); }
+})();
+
+// ── Saved Configs ──
+async function loadSavedConfigs() {
+    try {
+        const resp = await fetch('/api/v1/saved-configs?filter_type=input');
+        const data = await resp.json();
+        const sel = document.getElementById('saved-config-select');
+        sel.innerHTML = '<option value="">— Select configuration —</option>';
+        (data.configs || []).forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.name;
+            opt.textContent = c.name + (c.description ? ' — ' + c.description : '') + (c.is_active ? ' ✅' : '');
+            if (c.is_active) opt.style.fontWeight = 'bold';
+            sel.appendChild(opt);
+        });
+        // Show active config
+        const activeResp = await fetch('/api/v1/active-config?filter_type=input');
+        const activeData = await activeResp.json();
+        const info = document.getElementById('active-config-info');
+        if (activeData.active) {
+            info.textContent = '✅ Active configuration: ' + activeData.active;
+        } else {
+            info.textContent = 'No named configuration active (using defaults).';
+        }
+    } catch(e) { console.warn('Saved configs load error:', e); }
+}
+
+async function saveAsConfig() {
+    const name = document.getElementById('save-config-name').value.trim();
+    if (!name) { alert('Enter configuration name.'); return; }
+    const desc = document.getElementById('save-config-desc').value.trim();
+    // First save current filter settings
+    await saveInputFilter();
+    try {
+        const resp = await fetch('/api/v1/saved-configs', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name: name, description: desc, set_active: true, filter_type: 'input'})
+        });
+        if (resp.ok) {
+            alert('✅ Configuration "' + name + '" saved.');
+            document.getElementById('save-config-name').value = '';
+            document.getElementById('save-config-desc').value = '';
+            loadSavedConfigs();
+        } else {
+            const err = await resp.json();
+            alert('❌ ' + (err.error || 'Chyba'));
+        }
+    } catch(e) { alert('❌ ' + e.message); }
+}
+
+async function loadSavedConfig() {
+    const name = document.getElementById('saved-config-select').value;
+    if (!name) { alert('Select a configuration to load.'); return; }
+    if (!confirm('Load configuration "' + name + '"? Current settings will be overwritten.')) return;
+    try {
+        const resp = await fetch('/api/v1/saved-configs/load', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name: name, filter_type: 'input'})
+        });
+        if (resp.ok) {
+            alert('✅ Configuration "' + name + '" loaded.');
+            location.reload();
+        } else {
+            const err = await resp.json();
+            alert('❌ ' + (err.error || 'Chyba'));
+        }
+    } catch(e) { alert('❌ ' + e.message); }
+}
+
+async function deleteSavedConfig() {
+    const name = document.getElementById('saved-config-select').value;
+    if (!name) { alert('Select a configuration to delete.'); return; }
+    if (!confirm('Delete configuration "' + name + '"?')) return;
+    try {
+        const resp = await fetch('/api/v1/saved-configs/delete', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name: name, filter_type: 'input'})
+        });
+        if (resp.ok) {
+            alert('✅ Configuration "' + name + '" deleted.');
+            loadSavedConfigs();
+        } else {
+            const err = await resp.json();
+            alert('❌ ' + (err.error || 'Chyba'));
+        }
+    } catch(e) { alert('❌ ' + e.message); }
+}
+
+loadSavedConfigs();
+</script>

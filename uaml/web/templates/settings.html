@@ -1,0 +1,50 @@
+<div class="page-header">
+    <h1>⚙️ <span data-i18n="settings.title">Settings</span></h1>
+    <p class="subtitle" data-i18n="settings.subtitle">System configuration and API reference</p>
+</div>
+
+<div class="card">
+    <h2>🏗️ System Info</h2>
+    <div class="info-grid" id="system-info">
+        <div class="loading">Loading...</div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>🔧 API Endpoints</h2>
+    <table class="data-table">
+        <thead><tr><th>Endpoint</th><th>Method</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>/api/stats</code></td><td>GET</td><td>System statistics</td></tr>
+            <tr><td><code>/api/knowledge</code></td><td>GET</td><td>List/search knowledge (?q=, ?layer=, ?limit=, ?offset=)</td></tr>
+            <tr><td><code>/api/knowledge/:id</code></td><td>GET</td><td>Get entry detail</td></tr>
+            <tr><td><code>/api/knowledge</code></td><td>POST</td><td>Add new entry</td></tr>
+            <tr><td><code>/api/tasks</code></td><td>GET</td><td>List tasks (?status=)</td></tr>
+            <tr><td><code>/api/timeline</code></td><td>GET</td><td>Timeline (?limit=)</td></tr>
+            <tr><td><code>/api/layers</code></td><td>GET</td><td>Data layer statistics</td></tr>
+            <tr><td><code>/api/health</code></td><td>GET</td><td>Health check</td></tr>
+            <tr><td><code>/api/search</code></td><td>POST</td><td>Full-text search</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+async function loadSystemInfo() {
+    const [health, stats, layers] = await Promise.all([
+        fetch('/api/health').then(r => r.json()),
+        fetch('/api/stats').then(r => r.json()),
+        fetch('/api/layers').then(r => r.json()),
+    ]);
+
+    document.getElementById('system-info').innerHTML = `
+        <div class="info-row"><strong>Version:</strong> ${health.version}</div>
+        <div class="info-row"><strong>Status:</strong> <span class="status-dot green"></span> ${health.status}</div>
+        <div class="info-row"><strong>Knowledge entries:</strong> ${stats.knowledge}</div>
+        <div class="info-row"><strong>Tasks:</strong> ${stats.tasks}</div>
+        <div class="info-row"><strong>Reasoning traces:</strong> ${stats.reasoning_traces}</div>
+        <div class="info-row"><strong>Data layers:</strong> ${(layers.layers || []).map(l => `${l.name} (${l.count})`).join(', ')}</div>
+    `;
+}
+
+loadSystemInfo();
+</script>

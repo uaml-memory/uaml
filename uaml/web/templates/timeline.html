@@ -1,0 +1,70 @@
+<div class="page-header">
+    <h1>📅 <span data-i18n="timeline.title">Timeline</span></h1>
+    <p class="subtitle">Chronological view of all knowledge events</p>
+</div>
+
+<div class="toolbar">
+    <div class="filter-group">
+        <select id="tl-layer" onchange="loadTimeline()">
+            <option value="">All Layers</option>
+            <option value="identity">🔑 Identity</option>
+            <option value="knowledge">📚 Knowledge</option>
+            <option value="team">👥 Team</option>
+            <option value="operational">⚙️ Operational</option>
+            <option value="project">📁 Project</option>
+        </select>
+        <select id="tl-limit" onchange="loadTimeline()">
+            <option value="50">Last 50</option>
+            <option value="100" selected>Last 100</option>
+            <option value="200">Last 200</option>
+        </select>
+    </div>
+</div>
+
+<div class="card">
+    <div class="timeline" id="timeline">
+        <div class="loading">Loading...</div>
+    </div>
+</div>
+
+<script>
+async function loadTimeline() {
+    const limit = document.getElementById('tl-limit').value;
+    const data = await fetch(`/api/timeline?limit=${limit}`).then(r => r.json());
+    const el = document.getElementById('timeline');
+
+    if (!data.items || data.items.length === 0) {
+        el.innerHTML = '<p class="muted">No timeline entries</p>';
+        return;
+    }
+
+    let currentDate = '';
+    let html = '';
+
+    for (const item of data.items) {
+        const date = (item.timestamp || '').split('T')[0] || (item.timestamp || '').split(' ')[0] || 'Unknown';
+        if (date !== currentDate) {
+            currentDate = date;
+            html += `<div class="tl-date-header">${date}</div>`;
+        }
+        const time = (item.timestamp || '').split('T')[1]?.substring(0, 5) || (item.timestamp || '').split(' ')[1]?.substring(0, 5) || '';
+        html += `
+            <div class="tl-item" onclick="window.location='/knowledge?id=${item.id}'">
+                <div class="tl-dot dot-${item.layer || 'knowledge'}"></div>
+                <div class="tl-content">
+                    <div class="tl-header">
+                        <span class="badge badge-${item.layer}">${item.layer || '?'}</span>
+                        <span class="tl-topic">${item.topic || ''}</span>
+                        <span class="tl-time">${time}</span>
+                    </div>
+                    <div class="tl-text">${escapeHtml(item.content)}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    el.innerHTML = html;
+}
+
+loadTimeline();
+</script>

@@ -1,0 +1,378 @@
+<div class="page-header">
+    <h1 data-i18n="output_filter.title">📤 Output Filter / Focus Engine</h1>
+    <p class="subtitle" data-i18n="output_filter.subtitle">Controls what data leaves Neo4j into agent context. Token budget and quality management.</p>
+</div>
+
+<div class="card" id="recall-params">
+    <h2 data-i18n="output_filter.recall_title">⚙️ Parametry recallu</h2>
+    <p class="hint" data-i18n="output_filter.recall_hint">Controls data selection for agent context.</p>
+    <div class="params-grid">
+        <div class="param-card">
+            <label data-i18n="output_filter.param_token_budget">Token budget na dotaz <span class="cert-badge">🔒</span></label>
+            <input type="range" id="out-token-budget" min="200" max="32000" step="100" value="2000"
+                   oninput="this.nextElementSibling.textContent=this.value; updateImpact()">
+            <span class="param-value">2000</span>
+            <small class="hint">💡 +tokens = +quality, +cost</small>
+        </div>
+        <div class="param-card">
+            <label data-i18n="output_filter.param_min_relevance">Min. relevance pro recall <span class="cert-badge">🔒</span></label>
+            <input type="range" id="out-min-relevance" min="0" max="1" step="0.05" value="0.3"
+                   oninput="this.nextElementSibling.textContent=this.value; updateImpact()">
+            <span class="param-value">0.3</span>
+            <small class="hint">💡 Lower = more coverage, more tokens</small>
+        </div>
+        <div class="param-card">
+            <label data-i18n="output_filter.param_max_records">Max records per query</label>
+            <input type="range" id="out-max-records" min="1" max="50" step="1" value="10"
+                   oninput="this.nextElementSibling.textContent=this.value; updateImpact()">
+            <span class="param-value">10</span>
+            <small class="hint">💡 +records = +detail, +tokens</small>
+        </div>
+        <div class="param-card">
+            <label data-i18n="output_filter.param_temporal_decay">Temporal decay factor</label>
+            <input type="range" id="out-decay" min="0" max="1" step="0.05" value="0.5"
+                   oninput="this.nextElementSibling.textContent=this.value; updateImpact()">
+            <span class="param-value">0.5</span>
+            <small class="hint">💡 Higher = prefers newer data</small>
+        </div>
+        <div class="param-card">
+            <label>Half-life (days)</label>
+            <input type="number" id="out-halflife" min="1" max="365" value="30" style="width:100px">
+            <small class="hint">How many days = half relevance score</small>
+        </div>
+        <div class="param-card">
+            <label>Dedup podobnost</label>
+            <input type="range" id="out-dedup" min="0.5" max="1" step="0.05" value="0.85"
+                   oninput="this.nextElementSibling.textContent=this.value">
+            <span class="param-value">0.85</span>
+            <small class="hint">Merge results above this threshold</small>
+        </div>
+        <div class="param-card">
+            <label data-i18n="output_filter.param_recall_tier">Recall tier <span class="cert-badge">🔒</span></label>
+            <select id="out-tier">
+                <option value="1" selected>1 — Pouze souhrny</option>
+                <option value="2">2 — Souhrny + detaily</option>
+                <option value="3">3 — Full raw data</option>
+            </select>
+            <small class="hint">💡 Higher tier = more detail, more tokens</small>
+        </div>
+        <div class="param-card">
+            <label data-i18n="output_filter.param_sensitivity">Sensitivity threshold</label>
+            <select id="out-sensitivity">
+                <option value="1">1 — Very strict</option>
+                <option value="2">2 — Strict</option>
+                <option value="3" selected>3 — Standard</option>
+                <option value="4">4 — Permissive</option>
+                <option value="5">5 — Open</option>
+            </select>
+            <small class="hint">Records above this level require authorization</small>
+        </div>
+        <div class="param-card">
+            <label>Compress above (tokens)</label>
+            <input type="number" id="out-compress" min="100" max="5000" value="500" style="width:100px">
+            <small class="hint">Summarize records larger than this</small>
+        </div>
+        <div class="param-card">
+            <label>Summary preference</label>
+            <input type="range" id="out-summary-pref" min="0" max="1" step="0.05" value="0.8"
+                   oninput="this.nextElementSibling.textContent=this.value">
+            <span class="param-value">0.8</span>
+            <small class="hint">Weight for summaries vs. raw data</small>
+        </div>
+        <div class="param-card">
+            <label data-i18n="output_filter.param_context_pct">Max. % kontextu modelu</label>
+            <input type="range" id="out-ctx-pct" min="5" max="80" step="5" value="30"
+                   oninput="this.nextElementSibling.textContent=this.value+'%'; updateImpact()">
+            <span class="param-value">30%</span>
+            <small class="hint">💡 More context = less room for response</small>
+        </div>
+    </div>
+</div>
+
+<div class="card" id="impact-dashboard">
+    <h2 data-i18n="output_filter.impact_title">📊 Estimated Impact</h2>
+    <div class="impact-grid">
+        <div class="impact-card">
+            <div class="impact-label" data-i18n="output_filter.impact_quality">Kvalita odpovědi</div>
+            <div class="impact-bar" id="impact-quality"><div class="bar-fill green" style="width:80%"></div></div>
+            <span class="impact-value" id="impact-quality-val">80%</span>
+        </div>
+        <div class="impact-card">
+            <div class="impact-label" data-i18n="output_filter.impact_tokens">Token consumption</div>
+            <div class="impact-bar" id="impact-tokens"><div class="bar-fill blue" style="width:40%"></div></div>
+            <span class="impact-value" id="impact-tokens-val">40%</span>
+        </div>
+        <div class="impact-card">
+            <div class="impact-label" data-i18n="output_filter.impact_security">Ochrana dat</div>
+            <div class="impact-bar" id="impact-safety"><div class="bar-fill yellow" style="width:90%"></div></div>
+            <span class="impact-value" id="impact-safety-val">90%</span>
+        </div>
+    </div>
+</div>
+
+<div class="card" id="presets">
+    <h2 data-i18n="output_filter.presets_title">🎛️ Presety</h2>
+    <div class="preset-grid">
+        <button class="btn btn-preset" onclick="loadPreset('conservative')">
+            🛡️ <span data-i18n="output_filter.preset_conservative">Conservative</span><br>
+            <small data-i18n="output_filter.preset_conservative_desc">Low cost, maximum security</small>
+        </button>
+        <button class="btn btn-preset active" onclick="loadPreset('standard')">
+            ⚖️ <span data-i18n="output_filter.preset_standard">Standard</span><br>
+            <small data-i18n="output_filter.preset_standard_desc">Balanced quality and cost</small>
+        </button>
+        <button class="btn btn-preset" onclick="loadPreset('research')">
+            🔬 <span data-i18n="output_filter.preset_research">Research</span><br>
+            <small data-i18n="output_filter.preset_research_desc">Maximum detail, higher cost</small>
+        </button>
+    </div>
+</div>
+
+<div class="card" id="agent-rules">
+    <h2 data-i18n="output_filter.agent_rules_title">🤖 Pravidla agenta</h2>
+    <p class="hint" data-i18n="output_filter.agent_rules_hint">Restrictions for AI agents — agents cannot change these.</p>
+    <div class="switch-grid">
+        <label class="switch-label"><input type="checkbox" id="ar-summaries" checked> <span>Prefer summaries</span></label>
+        <label class="switch-label"><input type="checkbox" id="ar-lazy" checked> <span>Lazy loading</span></label>
+        <label class="switch-label"><input type="checkbox" id="ar-report" checked> <span data-i18n="output_filter.rule_report_tokens">Report token consumption</span></label>
+        <label class="switch-label"><input type="checkbox" id="ar-budget" checked> <span>Budget awareness</span></label>
+        <label class="switch-label"><input type="checkbox" id="ar-dedup" checked> <span>Deduplicate context</span></label>
+        <label class="switch-label"><input type="checkbox" id="ar-fresh" checked> <span>Prefer fresh data</span></label>
+    </div>
+</div>
+
+<div class="card" id="preset-management">
+    <h2 data-i18n="output_filter.presets_title">📋 Saved Configurations</h2>
+    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <select id="preset-select" style="flex:1; min-width:200px; padding:8px; background:#1e1e2e; color:#cdd6f4; border:1px solid #45475a; border-radius:6px;">
+            <option value="">-- Select configuration --</option>
+        </select>
+        <button class="btn btn-secondary" onclick="loadSelectedPreset()" data-i18n="output_filter.load_preset">📂 Load</button>
+        <button class="btn btn-secondary" onclick="saveAsPreset()" data-i18n="output_filter.save_as_preset">💾 Save as...</button>
+        <button class="btn btn-secondary" onclick="deleteSelectedPreset()" style="color:#f38ba8;" data-i18n="output_filter.delete_preset">🗑️ Delete</button>
+    </div>
+    <p id="active-preset-info" style="margin-top:8px; color:#a6adc8; font-size:13px;"></p>
+</div>
+
+<div class="actions-bar">
+    <button class="btn btn-primary" onclick="saveOutputFilter()" data-i18n="output_filter.btn_save">💾 Save Output Filter</button>
+    <button class="btn btn-secondary" onclick="resetToDefaults()" data-i18n="output_filter.btn_reset">↩️ Reset to Defaults</button>
+</div>
+
+<script>
+function updateImpact() {
+    const budget = parseInt(document.getElementById('out-token-budget').value);
+    const tier = parseInt(document.getElementById('out-tier').value);
+    const ctxPct = parseInt(document.getElementById('out-ctx-pct').value);
+    
+    const quality = Math.min(100, Math.round(40 + budget/100 + tier*10 + ctxPct*0.3));
+    const tokens = Math.min(100, Math.round(budget/320));
+    const safety = Math.min(100, Math.round(110 - budget/300 - tier*5));
+    
+    document.getElementById('impact-quality-val').textContent = quality + '%';
+    document.querySelector('#impact-quality .bar-fill').style.width = quality + '%';
+    document.getElementById('impact-tokens-val').textContent = tokens + '%';
+    document.querySelector('#impact-tokens .bar-fill').style.width = tokens + '%';
+    document.getElementById('impact-safety-val').textContent = safety + '%';
+    document.querySelector('#impact-safety .bar-fill').style.width = safety + '%';
+}
+
+const PRESETS = {
+    conservative: {token_budget:1500, min_relevance:0.5, max_records:5, decay:0.5, tier:1, ctx_pct:20},
+    standard: {token_budget:2000, min_relevance:0.3, max_records:10, decay:0.5, tier:1, ctx_pct:30},
+    research: {token_budget:8000, min_relevance:0.2, max_records:25, decay:0.3, tier:3, ctx_pct:50}
+};
+
+function loadPreset(name) {
+    const p = PRESETS[name];
+    if (!p) return;
+    document.getElementById('out-token-budget').value = p.token_budget;
+    document.getElementById('out-token-budget').nextElementSibling.textContent = p.token_budget;
+    document.getElementById('out-min-relevance').value = p.min_relevance;
+    document.getElementById('out-min-relevance').nextElementSibling.textContent = p.min_relevance;
+    document.getElementById('out-max-records').value = p.max_records;
+    document.getElementById('out-max-records').nextElementSibling.textContent = p.max_records;
+    document.getElementById('out-decay').value = p.decay;
+    document.getElementById('out-decay').nextElementSibling.textContent = p.decay;
+    document.getElementById('out-tier').value = p.tier;
+    document.getElementById('out-ctx-pct').value = p.ctx_pct;
+    document.getElementById('out-ctx-pct').nextElementSibling.textContent = p.ctx_pct + '%';
+    document.querySelectorAll('.btn-preset').forEach(b => b.classList.remove('active'));
+    if (event && event.target) event.target.closest('.btn-preset').classList.add('active');
+    updateImpact();
+}
+
+async function resetToDefaults() {
+    loadPreset('standard');
+    // Also save to server
+    const config = buildOutputConfig();
+    try {
+        const resp = await fetch('/api/v1/focus-config', {
+            method: 'PUT', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(config)
+        });
+        if (resp.ok) alert(t('output_filter.reset_ok') || '✅ Default settings restored and saved');
+        else alert((t('output_filter.save_error') || '❌ Chyba') + ': ' + (await resp.text()));
+    } catch(e) { alert('❌ ' + e.message); }
+}
+
+async function saveOutputFilter() {
+    const config = buildOutputConfig();
+    try {
+        const resp = await fetch('/api/v1/focus-config', {
+            method: 'PUT', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(config)
+        });
+        if (resp.ok) alert(t('output_filter.saved_ok') || '✅ Output filter saved');
+        else alert((t('output_filter.save_error') || '❌ Chyba') + ': ' + (await resp.text()));
+    } catch(e) { alert('❌ ' + e.message); }
+}
+
+// Preset management
+async function loadPresetList() {
+    try {
+        const resp = await fetch('/api/v1/saved-configs');
+        const data = await resp.json();
+        const sel = document.getElementById('preset-select');
+        sel.innerHTML = '<option value="">-- Select configuration --</option>';
+        (data.configs || []).forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.name;
+            opt.textContent = `${c.name} (${new Date(c.saved_at).toLocaleString()})`;
+            sel.appendChild(opt);
+        });
+        const active = await fetch('/api/v1/active-config');
+        const ad = await active.json();
+        if (ad.active) document.getElementById('active-preset-info').textContent = `Active: ${ad.active}`;
+    } catch(e) { console.warn('Preset list error:', e); }
+}
+
+async function saveAsPreset() {
+    const name = prompt('Configuration name:');
+    if (!name) return;
+    const config = buildOutputConfig();
+    try {
+        const resp = await fetch('/api/v1/saved-configs', {
+            method: 'POST', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name, config, filter_type: 'output'})
+        });
+        if (resp.ok) { alert('✅ Saved as: ' + name); loadPresetList(); }
+        else alert('❌ ' + (await resp.text()));
+    } catch(e) { alert('❌ ' + e.message); }
+}
+
+async function loadSelectedPreset() {
+    const name = document.getElementById('preset-select').value;
+    if (!name) { alert('Select configuration'); return; }
+    try {
+        const resp = await fetch('/api/v1/saved-configs/' + encodeURIComponent(name));
+        const data = await resp.json();
+        if (data.config) applyOutputConfig(data.config);
+        alert('✅ Loaded: ' + name);
+    } catch(e) { alert('❌ ' + e.message); }
+}
+
+async function deleteSelectedPreset() {
+    const name = document.getElementById('preset-select').value;
+    if (!name) { alert('Select configuration'); return; }
+    if (!confirm('Delete "' + name + '"?')) return;
+    try {
+        const resp = await fetch('/api/v1/saved-configs/delete', {
+            method: 'POST', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name})
+        });
+        if (resp.ok) { alert('✅ Deleted'); loadPresetList(); }
+        else alert('❌ ' + (await resp.text()));
+    } catch(e) { alert('❌ ' + e.message); }
+}
+
+function buildOutputConfig() {
+    return {
+        output_filter: {
+            token_budget_per_query: parseInt(document.getElementById('out-token-budget').value),
+            min_relevance_score: parseFloat(document.getElementById('out-min-relevance').value),
+            max_records: parseInt(document.getElementById('out-max-records').value),
+            temporal_decay_factor: parseFloat(document.getElementById('out-decay').value),
+            temporal_decay_halflife_days: parseInt(document.getElementById('out-halflife').value),
+            dedup_similarity: parseFloat(document.getElementById('out-dedup').value),
+            recall_tier: parseInt(document.getElementById('out-tier').value),
+            sensitivity_threshold: parseInt(document.getElementById('out-sensitivity').value),
+            compress_above_tokens: parseInt(document.getElementById('out-compress').value),
+            summary_preference: parseFloat(document.getElementById('out-summary-pref').value),
+            max_context_percentage: parseInt(document.getElementById('out-ctx-pct').value),
+        },
+        agent_rules: {
+            prefer_summaries_first: document.getElementById('ar-summaries').checked,
+            lazy_loading: document.getElementById('ar-lazy').checked,
+            report_token_usage: document.getElementById('ar-report').checked,
+            budget_aware: document.getElementById('ar-budget').checked,
+            deduplicate_context: document.getElementById('ar-dedup').checked,
+            prefer_fresh_data: document.getElementById('ar-fresh').checked,
+        }
+    };
+}
+
+function applyOutputConfig(cfg) {
+    const o = cfg.output_filter || cfg;
+    const setSlider = (id, val) => { const el = document.getElementById(id); if(el && val!==undefined) { el.value=val; if(el.nextElementSibling) el.nextElementSibling.textContent=val; }};
+    setSlider('out-token-budget', o.token_budget_per_query);
+    setSlider('out-min-relevance', o.min_relevance_score);
+    setSlider('out-max-records', o.max_records);
+    setSlider('out-decay', o.temporal_decay_factor);
+    if(o.temporal_decay_halflife_days) document.getElementById('out-halflife').value = o.temporal_decay_halflife_days;
+    setSlider('out-dedup', o.dedup_similarity);
+    if(o.recall_tier) document.getElementById('out-tier').value = o.recall_tier;
+    if(o.sensitivity_threshold) document.getElementById('out-sensitivity').value = o.sensitivity_threshold;
+    if(o.compress_above_tokens) document.getElementById('out-compress').value = o.compress_above_tokens;
+    setSlider('out-summary-pref', o.summary_preference);
+    const pct = o.max_context_percentage;
+    if(pct) { document.getElementById('out-ctx-pct').value=pct; document.getElementById('out-ctx-pct').nextElementSibling.textContent=pct+'%'; }
+    if (cfg.agent_rules) {
+        const a = cfg.agent_rules;
+        const setCb = (id, key) => { const el = document.getElementById(id); if(el && a[key]!==undefined) el.checked = a[key]; };
+        setCb('ar-summaries','prefer_summaries_first');
+        setCb('ar-lazy','lazy_loading');
+        setCb('ar-report','report_token_usage');
+        setCb('ar-budget','budget_aware');
+        setCb('ar-dedup','deduplicate_context');
+        setCb('ar-fresh','prefer_fresh_data');
+    }
+    updateImpact();
+}
+
+// Load current config
+(async function() {
+    try {
+        const resp = await fetch('/api/v1/focus-config');
+        const config = await resp.json();
+        if (config.output_filter) {
+            const o = config.output_filter;
+            const setSlider = (id, val) => { const el = document.getElementById(id); if(el && val!==undefined) { el.value=val; if(el.nextElementSibling) el.nextElementSibling.textContent=val; }};
+            setSlider('out-token-budget', o.token_budget_per_query);
+            setSlider('out-min-relevance', o.min_relevance_score);
+            setSlider('out-max-records', o.max_records);
+            setSlider('out-decay', o.temporal_decay_factor);
+            if(o.temporal_decay_halflife_days) document.getElementById('out-halflife').value = o.temporal_decay_halflife_days;
+            setSlider('out-dedup', o.dedup_similarity);
+            if(o.recall_tier) document.getElementById('out-tier').value = o.recall_tier;
+            if(o.sensitivity_threshold) document.getElementById('out-sensitivity').value = o.sensitivity_threshold;
+            if(o.compress_above_tokens) document.getElementById('out-compress').value = o.compress_above_tokens;
+            setSlider('out-summary-pref', o.summary_preference);
+            const pct = o.max_context_percentage;
+            if(pct) { document.getElementById('out-ctx-pct').value=pct; document.getElementById('out-ctx-pct').nextElementSibling.textContent=pct+'%'; }
+            updateImpact();
+        }
+        if (config.agent_rules) {
+            const a = config.agent_rules;
+            const setCb = (id, key) => { const el = document.getElementById(id); if(el && a[key]!==undefined) el.checked = a[key]; };
+            setCb('ar-summaries','prefer_summaries_first');
+            setCb('ar-lazy','lazy_loading');
+            setCb('ar-report','report_token_usage');
+            setCb('ar-budget','budget_aware');
+            setCb('ar-dedup','deduplicate_context');
+            setCb('ar-fresh','prefer_fresh_data');
+        }
+    } catch(e) { console.warn('Could not load focus config:', e); }
+    loadPresetList();
+})();
+</script>

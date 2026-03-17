@@ -1,0 +1,104 @@
+<div class="page-header">
+    <h1>✅ <span data-i18n="tasks.title">Tasks</span></h1>
+    <p class="subtitle">Kanban board with drag & drop</p>
+</div>
+
+<div class="toolbar">
+    <div class="filter-group">
+        <button onclick="loadTasks('')" class="btn btn-sm active" id="btn-all">All</button>
+        <button onclick="loadTasks('pending')" class="btn btn-sm" id="btn-pending">Pending</button>
+        <button onclick="loadTasks('in_progress')" class="btn btn-sm" id="btn-progress">In Progress</button>
+        <button onclick="loadTasks('done')" class="btn btn-sm" id="btn-done">Done</button>
+    </div>
+</div>
+
+<div class="kanban-board" id="kanban">
+    <div class="kanban-column" data-status="pending">
+        <h3 class="kanban-header header-open">📋 Pending <span class="kanban-count" id="count-pending"></span></h3>
+        <div id="col-pending" class="kanban-items"></div>
+    </div>
+    <div class="kanban-column" data-status="in_progress">
+        <h3 class="kanban-header header-progress">🔧 In Progress <span class="kanban-count" id="count-in_progress"></span></h3>
+        <div id="col-in_progress" class="kanban-items"></div>
+    </div>
+    <div class="kanban-column" data-status="done">
+        <h3 class="kanban-header header-done">✅ Done <span class="kanban-count" id="count-done"></span></h3>
+        <div id="col-done" class="kanban-items"></div>
+    </div>
+</div>
+
+<script>
+async function loadTasks(status) {
+    const url = status ? `/api/tasks?status=${status}` : '/api/tasks';
+    const data = await fetch(url).then(r => r.json());
+
+    // Show stats summary if available
+    if (data.stats) {
+        const total = Object.values(data.stats).reduce((a, b) => a + b, 0);
+        document.querySelector('.page-header .subtitle').textContent =
+            `${total} tasks: ${data.stats.done || 0} done, ${data.stats.in_progress || 0} in progress, ${data.stats.pending || 0} pending`;
+    }
+
+    const groups = { pending: [], in_progress: [], done: [] };
+    (data.tasks || []).forEach(t => {
+        const s = t.status || 'pending';
+        if (groups[s]) groups[s].push(t);
+        else groups.pending.push(t);
+    });
+
+    for (const [s, tasks] of Object.entries(groups)) {
+        const el = document.getElementById(`col-${s}`);
+        const countEl = document.getElementById(`count-${s}`);
+        if (countEl) countEl.textContent = `(${tasks.length})`;
+        if (el) {
+            el.innerHTML = tasks.length === 0
+                ? '<p class="muted">No tasks</p>'
+                : tasks.map(t => `
+                    <div class="kanban-card" draggable="true" data-id="${t.id}">
+                        <div class="kanban-title">${escapeHtml(t.text || t.title || 'Untitled')}</div>
+                        <div class="kanban-meta">
+                            ${t.group_name ? `<span class="tag">${escapeHtml(t.group_name)}</span>` : ''}
+                            <span class="muted">${formatTime(t.updated_at)}</span>
+                        </div>
+                    </div>
+                `).join('');
+        }
+    }
+
+    initDragDrop();
+}
+
+function initDragDrop() {
+    document.querySelectorAll('.kanban-card').forEach(card => {
+        card.addEventListener('dragstart', e => {
+            card.style.opacity = '0.5';
+            e.dataTransfer.setData('text/plain', card.dataset.id);
+        });
+        card.addEventListener('dragend', () => { card.style.opacity = '1'; });
+    });
+
+    document.querySelectorAll('.kanban-items').forEach(col => {
+        col.addEventListener('dragover', e => {
+            e.preventDefault();
+            col.style.background = 'var(--bg-hover)';
+        });
+        col.addEventListener('dragleave', () => { col.style.background = ''; });
+        col.addEventListener('drop', async e => {
+            e.preventDefault();
+            col.style.background = '';
+            const taskId = e.dataTransfer.getData('text/plain');
+            const newStatus = col.closest('.kanban-column').dataset.status;
+            try {
+                await fetch(`/api/tasks/${taskId}`, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({status: newStatus})
+                });
+                loadTasks('');
+            } catch (err) { console.error('Move failed:', err); }
+        });
+    });
+}
+
+loadTasks('');
+</script>

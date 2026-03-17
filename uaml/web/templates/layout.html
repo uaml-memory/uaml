@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAML Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">
+            <span class="logo-icon">🧠</span>
+            <span class="logo-text">UAML</span>
+            <span class="version">v0.4.1</span>
+        </div>
+        <div id="sidebar-identity" style="padding: 10px 16px; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--text-muted);">
+            <div id="sid-agent" style="margin-bottom: 4px;">⏳</div>
+            <div id="sid-machine" style="margin-bottom: 2px;"></div>
+            <div id="sid-model" style="margin-bottom: 2px;"></div>
+            <div id="sid-db" style="font-size: 11px; word-break: break-all; opacity: 0.7;"></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link" data-page="dashboard">📊 Dashboard</a></li>
+            <li><a href="/knowledge" class="nav-link" data-page="knowledge">📚 Knowledge</a></li>
+            <li><a href="/tasks" class="nav-link" data-page="tasks">✅ Tasks</a></li>
+            <li><a href="/graph" class="nav-link" data-page="graph">🔗 Graph</a></li>
+            <li><a href="/timeline" class="nav-link" data-page="timeline">📅 Timeline</a></li>
+            <li><a href="/projects" class="nav-link" data-page="projects">📂 Projects</a></li>
+            <li><a href="/infrastructure" class="nav-link" data-page="infrastructure">🖥️ Infrastructure</a></li>
+            <li><a href="/team" class="nav-link" data-page="team">👥 Team</a></li>
+            <li><a href="/input-filter" class="nav-link" data-page="input-filter">📥 <span data-i18n="nav.input_filter">Input Filter</span></a></li>
+            <li><a href="/output-filter" class="nav-link" data-page="output-filter">📤 <span data-i18n="nav.output_filter">Output Filter</span></a></li>
+            <li><a href="/rules-log" class="nav-link" data-page="rules-log">📋 <span data-i18n="nav.rules_log">Rules Log</span></a></li>
+            <li><a href="/orchestration" class="nav-link" data-page="orchestration">🤖 <span data-i18n="nav.orchestration">Orchestration</span></a></li>
+            <li><a href="/sanitize" class="nav-link" data-page="sanitize">🛡️ <span data-i18n="nav.sanitize">Prompt Protection</span></a></li>
+            <li><a href="/compliance" class="nav-link" data-page="compliance">🔐 Compliance</a></li>
+            <li><a href="/license" class="nav-link" data-page="license">🔑 License</a></li>
+            <li><a href="/export" class="nav-link" data-page="export">📦 Export</a></li>
+            <li><a href="/settings" class="nav-link" data-page="settings">⚙️ Settings</a></li>
+        </ul>
+        <div id="lang-switcher" style="padding: 8px 16px; position: relative;"></div>
+        <div class="nav-footer">
+            <span class="status-dot green"></span> API Connected
+        </div>
+    </nav>
+    <header class="top-bar" id="top-bar">
+        <div class="top-bar-left">
+            <h1 class="top-bar-title" data-i18n="topbar.title">🧠 UAML Dashboard</h1>
+        </div>
+        <div class="top-bar-right" id="top-bar-info">
+            <span id="tb-agent">⏳</span>
+            <span class="top-bar-sep">·</span>
+            <span id="tb-machine">🖥️</span>
+            <span class="top-bar-sep">·</span>
+            <span id="tb-version" style="color: var(--success); font-size: 0.9em;"></span>
+        </div>
+    </header>
+    <main class="content">
+        {{CONTENT}}
+    </main>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

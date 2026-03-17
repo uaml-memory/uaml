@@ -1,0 +1,108 @@
+<div class="page-header">
+    <h1>🔐 <span data-i18n="compliance.title">Compliance</span></h1>
+    <p class="subtitle" data-i18n="compliance.subtitle">GDPR and ISO 27001 compliance status</p>
+</div>
+
+<!-- Score Rings -->
+<div class="stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px">
+    <div class="card" style="text-align:center;padding:24px">
+        <div class="stat-label" style="margin-bottom:12px;font-weight:600">🇪🇺 GDPR</div>
+        <div class="compliance-ring" id="ring-gdpr" style="margin:0 auto 8px"></div>
+        <div class="stat-value" id="audit-pass" style="font-size:14px;color:var(--text-muted)">—</div>
+    </div>
+    <div class="card" style="text-align:center;padding:24px">
+        <div class="stat-label" style="margin-bottom:12px;font-weight:600">🏢 ISO 27001</div>
+        <div class="compliance-ring" id="ring-iso" style="margin:0 auto 8px"></div>
+        <div class="stat-value" id="audit-fail" style="font-size:14px;color:var(--text-muted)">—</div>
+    </div>
+    <div class="card" style="text-align:center;padding:24px">
+        <div class="stat-label" style="margin-bottom:12px;font-weight:600">Overall Compliance</div>
+        <div class="compliance-ring" id="ring-overall" style="margin:0 auto 8px"></div>
+        <div class="stat-value" id="audit-score" style="font-size:14px;color:var(--text-muted)">—</div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>📋 Audit Checks</h2>
+    <p class="muted">Run compliance audit via CLI: <code>uaml audit --format json</code></p>
+    <div class="audit-categories" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:16px">
+        <div class="audit-cat">
+            <h3>🇪🇺 GDPR</h3>
+            <ul>
+                <li>Art. 5 — Purpose limitation</li>
+                <li>Art. 6 — Lawfulness of processing</li>
+                <li>Art. 7 — Consent tracking</li>
+                <li>Art. 15 — Right of access</li>
+                <li>Art. 25 — Data protection by design</li>
+                <li>Data minimization</li>
+                <li>Storage limitation</li>
+            </ul>
+        </div>
+        <div class="audit-cat">
+            <h3>🏢 ISO 27001</h3>
+            <ul>
+                <li>A.8.2 — Data classification</li>
+                <li>A.8.3 — Access control</li>
+                <li>A.8.13 — Backup</li>
+                <li>A.8.15 — Audit trail</li>
+                <li>A.8.24 — Encryption</li>
+            </ul>
+        </div>
+        <div class="audit-cat">
+            <h3>🔒 Internal</h3>
+            <ul>
+                <li>Client data isolation</li>
+                <li>Ethics pipeline active</li>
+                <li>Data integrity (hash)</li>
+                <li>PQC encryption (ML-KEM-768)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Encryption Status -->
+<div class="card" style="margin-top:20px">
+    <h2>🔐 Encryption Status</h2>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:12px;font-size:14px">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+            <span>Algorithm</span><span style="color:var(--success)">ML-KEM-768 + AES-256-GCM</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+            <span>Standard</span><span>NIST FIPS 203</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+            <span>Quantum Resistant</span><span style="color:var(--success)">✅ Yes</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+            <span>Key Escrow</span><span style="color:var(--warning)">⚠️ Not configured</span>
+        </div>
+    </div>
+</div>
+
+<script>
+function drawRing(containerId, score) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    const size = 120, r = (size - 12) / 2;
+    const c = Math.PI * 2 * r;
+    const offset = c * (1 - score / 100);
+    const color = score >= 80 ? 'var(--success)' : score >= 50 ? 'var(--warning)' : 'var(--danger)';
+    el.innerHTML = `
+        <div style="position:relative;width:${size}px;height:${size}px">
+            <svg width="${size}" height="${size}" style="transform:rotate(-90deg)">
+                <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--border)" stroke-width="8"/>
+                <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${color}" stroke-width="8"
+                    stroke-dasharray="${c}" stroke-dashoffset="${offset}" stroke-linecap="round"/>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:${color}">${score}%</div>
+        </div>`;
+}
+
+// Demo scores (will connect to API)
+drawRing('ring-overall', 85);
+drawRing('ring-gdpr', 90);
+drawRing('ring-iso', 80);
+document.getElementById('audit-score').textContent = 'Overall: 85%';
+document.getElementById('audit-pass').textContent = '7/8 checks passed';
+document.getElementById('audit-fail').textContent = '3 findings';
+</script>

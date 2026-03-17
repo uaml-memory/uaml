@@ -1,0 +1,125 @@
+{
+  "app_name": "UAML Panel de control",
+  "nav": {
+    "dashboard": "Panel",
+    "knowledge": "Conocimiento",
+    "tasks": "Tareas",
+    "graph": "Grafo",
+    "timeline": "Cronología",
+    "projects": "Proyectos",
+    "infrastructure": "Infraestructura",
+    "team": "Equipo",
+    "compliance": "Cumplimiento",
+    "export": "Exportar",
+    "settings": "Configuración"
+  },
+  "dashboard": {
+    "title": "Panel de control",
+    "subtitle": "Capa de memoria universal para agentes de IA",
+    "knowledge_entries": "Entradas de conocimiento",
+    "tasks": "Tareas",
+    "reasoning_traces": "Trazas de razonamiento",
+    "data_layers": "Capas de datos",
+    "quick_search": "Búsqueda rápida",
+    "search_placeholder": "Buscar en la base de conocimiento...",
+    "recent_activity": "Actividad reciente",
+    "no_data": "Sin datos aún",
+    "no_results": "No se encontraron resultados",
+    "system": "Sistema",
+    "ai_agent": "Agente IA",
+    "versions": "Versiones",
+    "machine": "Máquina",
+    "os": "SO",
+    "arch": "Arquitectura",
+    "cpu": "CPU",
+    "cores": "núcleos",
+    "db_size": "Tamaño DB",
+    "search_btn": "Buscar"
+  },
+  "knowledge": {
+    "title": "Conocimiento",
+    "subtitle": "Explorar y gestionar entradas de conocimiento",
+    "search_placeholder": "Buscar...",
+    "all_layers": "Todas las capas",
+    "add_entry": "Añadir entrada",
+    "topic": "Tema",
+    "content": "Contenido",
+    "layer": "Capa",
+    "confidence": "Confianza",
+    "created": "Creado",
+    "tags": "Etiquetas",
+    "prev": "Anterior",
+    "next": "Siguiente"
+  },
+  "tasks": {
+    "title": "Tareas",
+    "subtitle": "Gestión y seguimiento de tareas",
+    "add_task": "Añadir tarea",
+    "open": "Abiertas",
+    "in_progress": "En progreso",
+    "done": "Completadas",
+    "priority": "Prioridad",
+    "assigned": "Asignado"
+  },
+  "projects": {
+    "title": "Proyectos",
+    "subtitle": "Grupos TODO y seguimiento de proyectos",
+    "search_placeholder": "Buscar proyectos...",
+    "no_projects": "No se encontraron proyectos",
+    "done_of_total": "completado",
+    "status": "Estado",
+    "task": "Tarea",
+    "updated": "Actualizado"
+  },
+  "infrastructure": {
+    "title": "Infraestructura",
+    "subtitle": "Máquinas, servicios y topología de red",
+    "network": "Topología de red",
+    "role": "Rol",
+    "os": "SO",
+    "ip": "IP",
+    "hw": "Hardware",
+    "services": "Servicios"
+  },
+  "team": {
+    "title": "Equipo",
+    "subtitle": "Miembros del equipo de IA y sus roles",
+    "rules": "Reglas del equipo",
+    "model": "Modelo",
+    "host": "Host"
+  },
+  "compliance": {
+    "title": "Cumplimiento",
+    "subtitle": "Estado de cumplimiento con GDPR e ISO 27001"
+  },
+  "export": {
+    "title": "Exportar / Importar",
+    "subtitle": "Exportación de datos, importación y gestión de copias de seguridad"
+  },
+  "settings": {
+    "title": "Configuración",
+    "subtitle": "Configuración del sistema y referencia de API"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "search": "Buscar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "close": "Cerrar",
+    "api_connected": "API conectada",
+    "machine": "Máquina",
+    "language": "Idioma",
+    "agent": "Agente",
+    "model": "Modelo",
+    "no_data": "Sin datos",
+    "no_results": "Sin resultados",
+    "error": "No se pudo cargar"
+  },
+  "timeline": {
+    "title": "Cronología"
+  },
+  "graph": {
+    "title": "Grafo"
+  }
+}

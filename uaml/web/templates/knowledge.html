@@ -1,0 +1,195 @@
+<div class="page-header">
+    <h1>📚 <span data-i18n="knowledge.title">Knowledge</span></h1>
+    <p class="subtitle" data-i18n="knowledge.subtitle">Browse and manage knowledge entries</p>
+</div>
+
+<div class="toolbar">
+    <div class="search-group">
+        <input type="text" id="kb-search" placeholder="Search knowledge..." data-i18n-placeholder="knowledge.search_placeholder" class="input-lg">
+        <button onclick="searchKnowledge()" class="btn btn-primary">🔍 Search</button>
+    </div>
+    <div class="filter-group">
+        <select id="layer-filter" onchange="loadKnowledge()">
+            <option value="">All Layers</option>
+            <option value="identity">🔑 Identity</option>
+            <option value="knowledge">📚 Knowledge</option>
+            <option value="team">👥 Team</option>
+            <option value="operational">⚙️ Operational</option>
+            <option value="project">📁 Project</option>
+        </select>
+        <button onclick="showAddModal()" class="btn btn-success">+ Add Entry</button>
+    </div>
+</div>
+
+<div class="card">
+    <div class="table-container">
+        <table class="data-table" id="knowledge-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Content</th>
+                    <th>Topic</th>
+                    <th>Layer</th>
+                    <th>Confidence</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
+            <tbody id="knowledge-body">
+                <tr><td colspan="6" class="loading">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+        <button onclick="prevPage()" class="btn btn-sm" id="prev-btn" disabled>← Previous</button>
+        <span id="page-info">Page 1</span>
+        <button onclick="nextPage()" class="btn btn-sm" id="next-btn">Next →</button>
+    </div>
+</div>
+
+<!-- Detail Modal -->
+<div id="detail-modal" class="modal" style="display:none">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="detail-title">Entry Detail</h2>
+            <button onclick="closeModal('detail-modal')" class="btn-close">×</button>
+        </div>
+        <div id="detail-body" class="modal-body"></div>
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div id="add-modal" class="modal" style="display:none">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add Knowledge Entry</h2>
+            <button onclick="closeModal('add-modal')" class="btn-close">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Content</label>
+                <textarea id="add-content" rows="4" class="input-full" placeholder="Knowledge content..."></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Topic</label>
+                    <input type="text" id="add-topic" class="input-full" placeholder="Topic">
+                </div>
+                <div class="form-group">
+                    <label>Tags</label>
+                    <input type="text" id="add-tags" class="input-full" placeholder="tag1,tag2">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Data Layer</label>
+                    <select id="add-layer" class="input-full">
+                        <option value="knowledge">📚 Knowledge</option>
+                        <option value="team">👥 Team</option>
+                        <option value="operational">⚙️ Operational</option>
+                        <option value="project">📁 Project</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Source</label>
+                    <select id="add-origin" class="input-full">
+                        <option value="manual">Manual</option>
+                        <option value="external">External</option>
+                        <option value="observed">Observed</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="addEntry()" class="btn btn-primary btn-full">Add Entry</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentPage = 0;
+const pageSize = 50;
+let isSearchMode = false;
+
+async function loadKnowledge() {
+    isSearchMode = false;
+    const layer = document.getElementById('layer-filter').value;
+    const url = `/api/knowledge?limit=${pageSize}&offset=${currentPage * pageSize}${layer ? '&layer=' + layer : ''}`;
+    const data = await fetch(url).then(r => r.json());
+    renderEntries(data.entries);
+}
+
+async function searchKnowledge() {
+    const q = document.getElementById('kb-search').value.trim();
+    if (!q) { loadKnowledge(); return; }
+    isSearchMode = true;
+    const data = await fetch(`/api/knowledge?q=${encodeURIComponent(q)}&limit=${pageSize}`).then(r => r.json());
+    renderEntries(data.entries);
+}
+
+function renderEntries(entries) {
+    const tbody = document.getElementById('knowledge-body');
+    if (!entries || entries.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="muted">No entries found</td></tr>';
+        return;
+    }
+    tbody.innerHTML = entries.map(e => `
+        <tr onclick="showDetail(${e.id})" class="clickable">
+            <td>${e.id}</td>
+            <td class="content-cell">${escapeHtml((e.content || e.topic || '').substring(0, 120))}${(e.content||e.topic||'').length > 120 ? '...' : ''}</td>
+            <td>${escapeHtml(e.topic || '-')}</td>
+            <td><span class="badge badge-${e.data_layer}">${e.data_layer || '?'}</span></td>
+            <td>${isNaN(e.confidence) ? (e.confidence || '-') : parseFloat(e.confidence).toFixed(2)}</td>
+            <td class="time-cell">${formatTime(e.created_at)}</td>
+        </tr>
+    `).join('');
+
+    document.getElementById('page-info').textContent = isSearchMode ? 'Search results' : `Page ${currentPage + 1}`;
+    document.getElementById('prev-btn').disabled = currentPage === 0;
+    document.getElementById('next-btn').disabled = entries.length < pageSize;
+}
+
+async function showDetail(id) {
+    const data = await fetch(`/api/knowledge/${id}`).then(r => r.json());
+    document.getElementById('detail-title').textContent = `Entry #${id}: ${data.topic || 'Untitled'}`;
+    document.getElementById('detail-body').innerHTML = `
+        <div class="detail-grid">
+            <div class="detail-row"><strong>Content:</strong><pre class="detail-content">${escapeHtml(data.content)}</pre></div>
+            <div class="detail-row"><strong>Topic:</strong> ${data.topic || '-'}</div>
+            <div class="detail-row"><strong>Tags:</strong> ${(data.tags || '-').split(',').map(t => `<span class="tag">${t.trim()}</span>`).join(' ')}</div>
+            <div class="detail-row"><strong>Layer:</strong> <span class="badge badge-${data.data_layer}">${data.data_layer}</span></div>
+            <div class="detail-row"><strong>Source:</strong> ${data.source_origin || '-'} / ${data.source_type || '-'}</div>
+            <div class="detail-row"><strong>Confidence:</strong> ${(data.confidence || 0).toFixed(3)}</div>
+            <div class="detail-row"><strong>Agent:</strong> ${data.agent_id || '-'}</div>
+            <div class="detail-row"><strong>Valid:</strong> ${data.valid_from || '∞'} → ${data.valid_until || '∞'}</div>
+            <div class="detail-row"><strong>Created:</strong> ${data.created_at}</div>
+            <div class="detail-row"><strong>Source Ref:</strong> ${data.source_ref || '-'}</div>
+        </div>
+    `;
+    document.getElementById('detail-modal').style.display = 'flex';
+}
+
+async function addEntry() {
+    const body = {
+        content: document.getElementById('add-content').value,
+        topic: document.getElementById('add-topic').value,
+        tags: document.getElementById('add-tags').value,
+        data_layer: document.getElementById('add-layer').value,
+        source_origin: document.getElementById('add-origin').value,
+    };
+    if (!body.content) { alert('Content is required'); return; }
+    await fetch('/api/knowledge', {
+        method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)
+    });
+    closeModal('add-modal');
+    loadKnowledge();
+}
+
+function showAddModal() { document.getElementById('add-modal').style.display = 'flex'; }
+function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+function prevPage() { if (currentPage > 0) { currentPage--; loadKnowledge(); } }
+function nextPage() { currentPage++; loadKnowledge(); }
+
+document.getElementById('kb-search')?.addEventListener('keypress', e => {
+    if (e.key === 'Enter') searchKnowledge();
+});
+
+loadKnowledge();
+</script>

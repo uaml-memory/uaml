@@ -1,0 +1,42 @@
+version: '1.0'
+last_modified: '2026-03-14T23:24:18.384698+00:00'
+modified_by: ''
+input_filter:
+  min_relevance_score: 0
+  dedup_threshold: 0.95
+  max_source_age_days: 365
+  ttl_days: 730
+  max_entry_tokens: 100
+  min_entry_length: 10
+  require_classification: true
+  pii_detection: true
+  rate_limit_per_min: 100
+  categories:
+    personal: require_consent
+    financial: encrypt
+    health: deny
+    company: allow
+    public: allow
+    communication: encrypt
+output_filter:
+  token_budget_per_query: 2000
+  min_relevance_score: 0.3
+  max_records: 10
+  temporal_decay_factor: 0.5
+  temporal_decay_halflife_days: 30
+  dedup_similarity: 0.85
+  recall_tier: 1
+  sensitivity_threshold: 3
+  compress_above_tokens: 500
+  summary_preference: 0.8
+  max_context_percentage: 30
+agent_rules:
+  prefer_summaries_first: true
+  lazy_loading: true
+  report_token_usage: true
+  budget_aware: true
+  deduplicate_context: true
+  prefer_fresh_data: true
+  never_expose_rules: true
+  never_bypass_filter: true
+  log_all_recalls: true

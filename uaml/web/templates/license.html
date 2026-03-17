@@ -1,0 +1,163 @@
+<div class="page-header">
+    <h1>🔑 License</h1>
+    <p class="subtitle">Manage your UAML license key and view active features</p>
+</div>
+
+<!-- Current License Status -->
+<div class="card" id="license-status-card">
+    <h2>📋 License Status</h2>
+    <div class="info-grid" id="license-info">
+        <div class="loading">Loading...</div>
+    </div>
+</div>
+
+<!-- Activate License -->
+<div class="card">
+    <h2>🔓 Activate License</h2>
+    <p style="color: var(--text-muted); margin-bottom: 12px;">
+        Enter your license key to unlock premium features. You can also use CLI: <code>uaml activate &lt;KEY&gt;</code>
+    </p>
+    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+        <input type="text" id="license-key-input" placeholder="UAML-S-XXXXXXXX-XXXXXXXX-XXXXXXXX"
+               style="flex: 1; min-width: 300px; padding: 10px 14px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; color: var(--text-primary); font-family: monospace; font-size: 14px;">
+        <button id="activate-btn" onclick="activateLicense()"
+                style="padding: 10px 24px; background: var(--accent); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px;">
+            Activate
+        </button>
+    </div>
+    <div id="activate-result" style="margin-top: 10px; display: none;"></div>
+</div>
+
+<!-- Feature Matrix -->
+<div class="card">
+    <h2>✨ Features by Plan</h2>
+    <table class="data-table" id="feature-matrix">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Community (Free)</th>
+                <th>Starter (€8/mo)</th>
+                <th>Professional (€29/mo)</th>
+                <th>Team (€190/mo)</th>
+                <th>Enterprise</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Memory Storage</td><td>10,000 records</td><td>100,000</td><td>1,000,000</td><td>5,000,000</td><td>Unlimited</td></tr>
+            <tr><td>Focus Engine</td><td>Basic</td><td>✅ Full</td><td>✅ Full</td><td>✅ Full</td><td>✅ Full</td></tr>
+            <tr><td>Input/Output Filters</td><td>Basic</td><td>✅ Custom</td><td>✅ Custom</td><td>✅ Custom</td><td>✅ Custom</td></tr>
+            <tr><td>Knowledge Graph (Neo4j)</td><td>❌</td><td>❌</td><td>✅</td><td>✅</td><td>✅</td></tr>
+            <tr><td>MCP Server</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+            <tr><td>Multi-Agent Coordination</td><td>❌</td><td>❌</td><td>✅ 3 agents</td><td>✅ 50 agents</td><td>✅ Unlimited</td></tr>
+            <tr><td>SyncEngine</td><td>❌</td><td>❌</td><td>✅</td><td>✅</td><td>✅</td></tr>
+            <tr><td>Compliance Dashboard</td><td>❌</td><td>❌</td><td>✅</td><td>✅</td><td>✅</td></tr>
+            <tr><td>PQC Encryption</td><td>❌</td><td>❌</td><td>❌</td><td>✅</td><td>✅</td></tr>
+            <tr><td>Max Activations</td><td>1</td><td>3</td><td>10</td><td>50</td><td>Unlimited</td></tr>
+            <tr><td>Support</td><td>Community</td><td>Email</td><td>Priority Email</td><td>Dedicated</td><td>Custom SLA</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Deactivate -->
+<div class="card" id="deactivate-card" style="display: none;">
+    <h2>⚠️ Deactivate License</h2>
+    <p style="color: var(--text-muted); margin-bottom: 12px;">
+        Deactivating releases this device slot. Features will revert to Community tier.
+    </p>
+    <button onclick="deactivateLicense()"
+            style="padding: 8px 20px; background: #e94560; color: #fff; border: none; border-radius: 6px; cursor: pointer;">
+        Deactivate This Device
+    </button>
+</div>
+
+<script>
+async function loadLicenseStatus() {
+    try {
+        const resp = await fetch('/api/license');
+        const data = await resp.json();
+        const info = document.getElementById('license-info');
+
+        if (data.status === 'active') {
+            const expDate = data.expires ? new Date(data.expires).toLocaleDateString() : 'N/A';
+            info.innerHTML = `
+                <div class="info-item"><span class="info-label">Status</span><span class="info-value" style="color:#4ade80;">✅ Active</span></div>
+                <div class="info-item"><span class="info-label">Plan</span><span class="info-value">${data.plan || 'Unknown'}</span></div>
+                <div class="info-item"><span class="info-label">License Key</span><span class="info-value" style="font-family:monospace;">${data.key_masked || '••••'}</span></div>
+                <div class="info-item"><span class="info-label">Expires</span><span class="info-value">${expDate}</span></div>
+                <div class="info-item"><span class="info-label">Device ID</span><span class="info-value" style="font-family:monospace;font-size:11px;">${data.device_id || 'N/A'}</span></div>
+                <div class="info-item"><span class="info-label">Activations</span><span class="info-value">${data.activations_used || '?'}/${data.activations_max || '?'}</span></div>
+            `;
+            document.getElementById('deactivate-card').style.display = 'block';
+            // Highlight active plan column
+            highlightPlan(data.plan);
+        } else {
+            info.innerHTML = `
+                <div class="info-item"><span class="info-label">Status</span><span class="info-value" style="color:#f59e0b;">🟠 Community (Free)</span></div>
+                <div class="info-item"><span class="info-label">Plan</span><span class="info-value">Community</span></div>
+                <div class="info-item"><span class="info-label">Note</span><span class="info-value">Enter a license key above to unlock premium features</span></div>
+            `;
+        }
+    } catch (e) {
+        document.getElementById('license-info').innerHTML = `
+            <div class="info-item"><span class="info-label">Status</span><span class="info-value" style="color:#f59e0b;">🟠 Community (Free)</span></div>
+            <div class="info-item"><span class="info-label">Note</span><span class="info-value">License server not available — running in Community mode</span></div>
+        `;
+    }
+}
+
+function highlightPlan(plan) {
+    const plans = {'Community': 1, 'Starter': 2, 'Professional': 3, 'Team': 4, 'Enterprise': 5};
+    const col = plans[plan];
+    if (!col) return;
+    const rows = document.querySelectorAll('#feature-matrix tbody tr');
+    rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        if (cells[col]) cells[col].style.background = 'rgba(74, 222, 128, 0.15)';
+    });
+    const th = document.querySelectorAll('#feature-matrix thead th');
+    if (th[col]) { th[col].style.background = 'rgba(74, 222, 128, 0.2)'; th[col].style.fontWeight = 'bold'; }
+}
+
+async function activateLicense() {
+    const key = document.getElementById('license-key-input').value.trim();
+    const result = document.getElementById('activate-result');
+    if (!key) { result.style.display = 'block'; result.innerHTML = '<span style="color:#e94560;">Please enter a license key</span>'; return; }
+
+    document.getElementById('activate-btn').disabled = true;
+    document.getElementById('activate-btn').textContent = 'Activating...';
+
+    try {
+        const resp = await fetch('/api/license/activate', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({key: key})
+        });
+        const data = await resp.json();
+        result.style.display = 'block';
+        if (data.success) {
+            result.innerHTML = '<span style="color:#4ade80;">✅ License activated successfully! Reloading...</span>';
+            setTimeout(() => location.reload(), 1500);
+        } else {
+            result.innerHTML = `<span style="color:#e94560;">❌ ${data.error || 'Activation failed'}</span>`;
+        }
+    } catch (e) {
+        result.style.display = 'block';
+        result.innerHTML = `<span style="color:#e94560;">❌ Error: ${e.message}</span>`;
+    }
+    document.getElementById('activate-btn').disabled = false;
+    document.getElementById('activate-btn').textContent = 'Activate';
+}
+
+async function deactivateLicense() {
+    if (!confirm('Are you sure? Features will revert to Community tier.')) return;
+    try {
+        const resp = await fetch('/api/license/deactivate', {method: 'POST'});
+        const data = await resp.json();
+        if (data.success) { alert('License deactivated.'); location.reload(); }
+        else { alert('Error: ' + (data.error || 'Failed')); }
+    } catch(e) { alert('Error: ' + e.message); }
+}
+
+// Load on page show
+loadLicenseStatus();
+</script>

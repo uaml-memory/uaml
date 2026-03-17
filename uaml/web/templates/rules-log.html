@@ -1,0 +1,112 @@
+<div class="page-header">
+    <h1 data-i18n="rules_log.title">📋 Historie změn pravidel</h1>
+    <p class="subtitle" data-i18n="rules_log.subtitle">Audit trail of all configuration changes. Every change: who, what, when and why.</p>
+</div>
+
+<div class="card" id="log-stats">
+    <h2 data-i18n="rules_log.stats_title">📊 Statistiky</h2>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value" id="stat-total">0</div>
+            <div class="stat-label" data-i18n="rules_log.stat_total">Celkem změn</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="stat-users">0</div>
+            <div class="stat-label" data-i18n="rules_log.stat_users">Unique users</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="stat-last">—</div>
+            <div class="stat-label" data-i18n="rules_log.stat_last_change">Last change</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="stat-most">—</div>
+            <div class="stat-label" data-i18n="rules_log.stat_most_changed">Most changed</div>
+        </div>
+    </div>
+</div>
+
+<div class="card" id="log-history">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2 data-i18n="rules_log.history_title">📜 Historie změn</h2>
+        <div>
+            <button class="btn btn-sm" onclick="loadHistory()" data-i18n="rules_log.btn_refresh">🔄 Obnovit</button>
+            <button class="btn btn-sm" onclick="exportCSV()" data-i18n="rules_log.btn_export">📥 Export CSV</button>
+        </div>
+    </div>
+    <table class="data-table" id="log-table">
+        <thead>
+            <tr>
+                <th data-i18n="rules_log.col_time">Time</th>
+                <th data-i18n="rules_log.col_user">User</th>
+                <th data-i18n="rules_log.col_parameter">Parametr</th>
+                <th data-i18n="rules_log.col_old">Old value</th>
+                <th data-i18n="rules_log.col_new">New value</th>
+                <th data-i18n="rules_log.col_reason">Reason</th>
+            </tr>
+        </thead>
+        <tbody id="log-body">
+            <tr><td colspan="6" class="hint" data-i18n="rules_log.no_changes">No changes yet.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+async function loadStats() {
+    try {
+        const resp = await fetch('/api/v1/rules-log/stats');
+        if (!resp.ok) return;
+        const data = await resp.json();
+        document.getElementById('stat-total').textContent = data.total_changes || 0;
+        document.getElementById('stat-users').textContent = data.unique_users || 0;
+        if (data.last_change) {
+            const d = new Date(data.last_change);
+            document.getElementById('stat-last').textContent = d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
+        }
+        if (data.most_changed_rule) {
+            document.getElementById('stat-most').textContent = data.most_changed_rule;
+        }
+    } catch(e) { console.warn('Stats error:', e); }
+}
+
+async function loadHistory() {
+    try {
+        const resp = await fetch('/api/v1/rules-log?limit=50');
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const tbody = document.getElementById('log-body');
+        if (!data.changes || data.changes.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="hint">' + (t('rules_log.no_changes') || 'No changes yet.') + '</td></tr>';
+            return;
+        }
+        tbody.innerHTML = data.changes.map(c => {
+            const d = new Date(c.timestamp);
+            const time = d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
+            return `<tr>
+                <td>${time}</td>
+                <td>${c.user || '—'}</td>
+                <td><code>${c.rule_path || '—'}</code></td>
+                <td>${JSON.stringify(c.old_value) || '—'}</td>
+                <td>${JSON.stringify(c.new_value) || '—'}</td>
+                <td>${c.reason || '—'}</td>
+            </tr>`;
+        }).join('');
+    } catch(e) { console.warn('History error:', e); }
+}
+
+function exportCSV() {
+    const table = document.getElementById('log-table');
+    const rows = Array.from(table.querySelectorAll('tr'));
+    const csv = rows.map(r => 
+        Array.from(r.querySelectorAll('th,td')).map(c => '"' + c.textContent.replace(/"/g, '""') + '"').join(',')
+    ).join('\n');
+    const blob = new Blob([csv], {type: 'text/csv'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'rules-log.csv'; a.click();
+    URL.revokeObjectURL(url);
+}
+
+// Load on init
+loadStats();
+loadHistory();
+</script>
