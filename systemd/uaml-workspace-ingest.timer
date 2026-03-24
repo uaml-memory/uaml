@@ -1,0 +1,11 @@
+[Unit]
+Description=UAML Workspace Ingest — periodic re-scan every 30 min
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=30min
+RandomizedDelaySec=60
+Persistent=true
+
+[Install]
+WantedBy=timers.target

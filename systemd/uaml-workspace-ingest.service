@@ -1,0 +1,11 @@
+[Unit]
+Description=UAML Workspace Ingest — index changed files
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 -m uaml.ingest.first_run --db /root/.openclaw/workspace/data/memory.db
+WorkingDirectory=/root/.openclaw/workspace/projects/_active/uaml-package
+Environment=PYTHONPATH=/root/.openclaw/workspace/projects/_active/uaml-package
+Environment=OPENCLAW_WORKSPACE=/root/.openclaw/workspace
+TimeoutStartSec=300
