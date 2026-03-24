@@ -1,0 +1,147 @@
+UAML — End User License Agreement (EULA)
+Effective Date: March 14, 2026 | Version 1.0
+
+This End User License Agreement ("Agreement") is entered into between GLG, a.s., a company registered under the laws of the Czech Republic ("Provider"), and you ("User").
+
+By installing, accessing, or using any edition of the UAML software ("Software"), you agree to be bound by this Agreement.
+
+1. Definitions
+
+"Free Edition" — the version of the Software made available at no cost for personal use.
+"Commercial Edition" — the version requiring a paid Subscription for lawful use.
+"Subscription" — a time-limited license purchased through the Provider's official channels.
+"Free Trial" — a time-limited evaluation period for the Commercial Edition.
+
+2. Dual Licensing Model
+
+2.1 Free Edition — Personal Use License
+
+The Free Edition is provided free of charge for personal, non-commercial use only. You may not use the Free Edition for any commercial purpose, including but not limited to providing services to third parties, integrating into commercial products, or generating revenue. All commercial use requires a paid Subscription (Pro, Enterprise, or Custom).
+
+2.2 Commercial Edition — Commercial License
+
+The Commercial Edition requires an active paid Subscription (or active Free Trial). The Commercial License grants you:
+
+  - A non-exclusive, non-transferable, revocable right to use the Commercial Edition;
+  - Access to commercial-only modules, features, and integrations;
+  - Priority support as specified in your Subscription plan;
+  - Use within the scope defined by your Subscription tier.
+
+3. Restrictions
+
+You may NOT:
+
+  a) Redistribute the Commercial Edition or any part thereof;
+  b) Sublicense the Software to third parties;
+  c) Reverse engineer the Commercial Edition beyond what is permitted by
+     applicable law;
+  d) Remove copyright notices, license headers, or attribution from the
+     Software;
+  e) Use the Software to build a competing product or service;
+  f) Exceed the scope of your purchased license tier;
+  g) Transfer your license without prior written consent from the Provider.
+
+4. Intellectual Property
+
+The Software and all associated intellectual property rights are and remain
+the exclusive property of GLG, a.s. This Agreement does not transfer any
+ownership rights to you.
+
+The UAML name, logo, and associated trademarks are the property of GLG, a.s.
+Use of these marks requires prior written authorization.
+
+5. Data Protection
+
+5.1 Your Data
+
+The Software processes and stores data locally on your hardware. The Provider
+does not access, collect, or process your data unless you explicitly opt in
+to cloud services.
+
+5.2 GDPR Compliance
+
+The Software includes tools for GDPR compliance (consent tracking, data
+subject access reports, erasure). However, you are responsible for ensuring
+your use of the Software complies with applicable data protection laws.
+
+5.3 No Warranty of Compliance
+
+While the Software provides compliance tools, the Provider does not guarantee
+that use of the Software alone satisfies all regulatory requirements. Consult
+qualified legal counsel for compliance advice.
+
+6. Warranty Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+The Provider does not warrant that the Software will be error-free,
+uninterrupted, or meet your specific requirements.
+
+7. Limitation of Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE
+PROVIDER BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR
+PUNITIVE DAMAGES ARISING FROM OR RELATED TO THIS AGREEMENT OR THE USE OF THE
+SOFTWARE.
+
+The Provider's total aggregate liability shall not exceed the fees paid by
+you in the twelve (12) months preceding the claim.
+
+8. Term and Termination
+
+8.1 Term
+
+This Agreement is effective upon your first use of the Software and continues
+until terminated.
+
+8.2 Termination by You
+
+You may terminate this Agreement at any time by ceasing all use of the
+Software and destroying all copies.
+
+8.3 Termination by Provider
+
+The Provider may terminate this Agreement immediately if you breach any term.
+Upon termination, you must cease all use and destroy all copies of the
+Commercial Edition. Personal Use License rights (Free Edition) remain in
+effect — your data is preserved and community-tier features continue to work.
+
+8.4 Survival
+
+Sections 4 (Intellectual Property), 6 (Warranty Disclaimer), 7 (Limitation
+of Liability), and 9 (Governing Law) survive termination.
+
+9. Governing Law
+
+This Agreement is governed by and construed in accordance with the laws of
+the Czech Republic. Any disputes arising under this Agreement shall be
+subject to the exclusive jurisdiction of the courts of the Czech Republic.
+
+10. Export Compliance
+
+The Software includes cryptographic functionality (ML-KEM-768). You are
+responsible for compliance with applicable export control laws and
+regulations.
+
+11. Updates and Modifications
+
+The Provider may update this Agreement from time to time. Continued use of
+the Software after notification of changes constitutes acceptance of the
+updated terms. Material changes will be communicated with at least 30 days'
+notice.
+
+12. Entire Agreement
+
+This Agreement constitutes the entire agreement between you and the Provider
+regarding the Software and supersedes all prior agreements, understandings,
+and communications.
+
+13. Contact
+
+GLG, a.s.
+Email: info@uaml.ai
+Web: https://uaml-memory.com
+
+© 2026 GLG, a.s. — All rights reserved.

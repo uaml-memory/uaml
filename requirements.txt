@@ -1,0 +1,19 @@
+# Core (required)
+click>=8.0
+
+# Optional: Neo4j graph backend
+# neo4j>=5.0
+
+# Optional: Entity extraction (NLP)
+# spacy>=3.7
+
+# Optional: PQC encryption
+# age-encryption>=0.1
+
+# Optional: MCP server protocol
+# mcp>=1.0
+
+# Development
+# pytest>=7.0
+# pytest-cov
+# ruff

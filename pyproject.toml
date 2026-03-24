@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools>=68.0,<76", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "uaml-memory"
+version = "2.0.0"
+description = "Universal Agent Memory Layer — persistent, temporal, ethical memory for AI agents"
+readme = "README.md"
+license = {text = "Proprietary — Free for personal use, commercial use requires paid subscription (see LICENSE)"}
+requires-python = ">=3.10"
+authors = [
+    { name = "GLG, a.s." },
+]
+keywords = ["ai", "agent", "memory", "knowledge-graph", "temporal", "ethics", "mcp"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+dependencies = [
+    "click>=8.0",
+]
+
+[project.optional-dependencies]
+neo4j = ["neo4j>=5.0"]
+entities = ["spacy>=3.7"]
+pqc = ["age-encryption>=0.1"]
+mcp = ["mcp>=1.0"]
+all = ["uaml[neo4j,entities,mcp]"]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov",
+    "ruff",
+]
+
+[project.scripts]
+uaml = "uaml.cli.main:cli"
+
+[project.urls]
+Homepage = "https://github.com/uaml/uaml"
+Documentation = "https://uaml.dev"
+Repository = "https://github.com/uaml/uaml"
+"Bug Tracker" = "https://github.com/uaml/uaml/issues"
+Changelog = "https://github.com/uaml/uaml/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+include = ["uaml*"]
+
+[tool.setuptools.package-data]
+"uaml.web" = ["templates/**/*", "templates/*", "static/**/*", "static/*"]
+"uaml.docs" = ["*.md"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP"]
