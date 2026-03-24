@@ -1,23 +1,22 @@
-# Copyright (c) 2026 GLG, a.s. All rights reserved.
-"""Token Anonymizer — Available in UAML Pro and Enterprise tiers.
+"""
+UAML Token Anonymizer — Available in UAML Pro and Enterprise tiers.
 
-Automatically detects and replaces PII, IP addresses, file paths, and other
-sensitive tokens before they enter the memory layer (GDPR, CCPA compliant).
+Provides advanced token anonymization with:
+- Case-insensitive name matching
+- Czech language declension support
+- Fuzzy typo detection (Damerau-Levenshtein)
+- IP, email, and PII token replacement
+- Reversible anonymization with mapping
 
 Visit https://uaml-memory.com for licensing information.
 """
 
 
 class TokenAnonymizer:
-    """PII/token anonymizer for memory ingestion pipeline.
-
-    Available in UAML Pro and Enterprise tiers.
-    Free tier users can implement custom anonymization via the ingestion hooks API.
-    """
-
-    def __init__(self, *args, **kwargs):
+    """Token Anonymizer — requires UAML Pro or Enterprise license."""
+    
+    def __init__(self):
         raise NotImplementedError(
             "TokenAnonymizer requires UAML Pro license. "
-            "Visit https://uaml-memory.com for details.\n"
-            "For custom anonymization, see: https://uaml.dev/docs/hooks/ingestion"
+            "Visit https://uaml-memory.com for details."
         )
