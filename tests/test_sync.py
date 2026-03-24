@@ -906,14 +906,14 @@ class TestSyncFilterByAgent:
         store.learn("Agent-A says hi", topic="test", agent_id="agent-a")
         store.learn("Default says hi", topic="test")
 
-        filt = SyncFilter(allowed_agents=["cyril"])
+        filt = SyncFilter(allowed_agents=["agent-b"])
         filepath = engine.full_export(tables=["knowledge"], sync_filter=filt)
 
         with open(filepath) as f:
             lines = [l.strip() for l in f if l.strip()]
 
         assert len(lines) == 1
-        assert json.loads(lines[0])["data"]["agent_id"] == "cyril"
+        assert json.loads(lines[0])["data"]["agent_id"] == "agent-b"
 
         store.close()
 

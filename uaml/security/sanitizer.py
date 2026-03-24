@@ -171,8 +171,11 @@ class DataSanitizer:
         return result.findings
 
     def add_pattern(self, name: str, pattern: str, replacement: str) -> None:
-        """Add a custom pattern."""
-        self._patterns[name] = (re.compile(pattern), replacement)
+        """Add a custom pattern (takes precedence over built-in patterns)."""
+        # Insert at the beginning so custom patterns are evaluated first
+        new_patterns = {name: (re.compile(pattern), replacement)}
+        new_patterns.update(self._patterns)
+        self._patterns = new_patterns
 
     def remove_pattern(self, name: str) -> bool:
         """Remove a pattern."""

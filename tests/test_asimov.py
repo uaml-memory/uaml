@@ -71,7 +71,7 @@ class TestTier0Humanity:
         assert verdict.rejected
 
     def test_tier0_blocks_on_input(self, checker):
-        verdict = checker.check_input("mass surveillance targeting plan")
+        verdict = checker.check_input_verdict("mass surveillance targeting plan")
         assert verdict.rejected
 
 
@@ -99,7 +99,7 @@ class TestTier1Individual:
     def test_attorney_privilege_output_only(self, checker):
         """Attorney-client privilege should only block OUTPUT."""
         # Input should pass (we can store info about privilege)
-        input_verdict = checker.check_input("advokátní tajemství klienta")
+        input_verdict = checker.check_input_verdict("advokátní tajemství klienta")
         # Output should block (don't leak to unauthorized)
         output_verdict = checker.check_output("advokátní tajemství klienta")
         assert output_verdict.rejected
@@ -115,7 +115,7 @@ class TestTier2Commands:
         assert any(m.rule.tier == AsimovTier.COMMAND for m in verdict.matches)
 
     def test_spam_flagged_on_input(self, checker):
-        verdict = checker.check_input("Buy now! Limited offer! Act fast!")
+        verdict = checker.check_input_verdict("Buy now! Limited offer! Act fast!")
         assert verdict.flagged
 
     def test_spam_not_checked_on_output(self, checker):
@@ -125,7 +125,7 @@ class TestTier2Commands:
         assert verdict.approved
 
     def test_short_content_flagged(self, checker):
-        verdict = checker.check_input("hi")
+        verdict = checker.check_input_verdict("hi")
         assert verdict.flagged
 
 
@@ -185,7 +185,7 @@ class TestInputOutputSeparation:
     def test_input_only_rules(self, checker):
         """Rules with scope='input' should only trigger on check_input."""
         # min_content_length is input-only
-        input_v = checker.check_input("hi")
+        input_v = checker.check_input_verdict("hi")
         output_v = checker.check_output("hi")
         assert input_v.flagged
         # Output check with short content - min_content_length shouldn't trigger
@@ -199,7 +199,7 @@ class TestInputOutputSeparation:
         """Rules with scope='output' should only trigger on check_output."""
         # no_attorney_privilege is output-only
         text = "advokátní tajemství disclosure"
-        input_v = checker.check_input(text)
+        input_v = checker.check_input_verdict(text)
         output_v = checker.check_output(text)
         input_rules = {m.rule.name for m in input_v.matches}
         output_rules = {m.rule.name for m in output_v.matches}
@@ -209,7 +209,7 @@ class TestInputOutputSeparation:
     def test_both_scope_rules(self, checker):
         """Rules with scope='both' should trigger on both."""
         text = "password = SuperSecret123!"
-        input_v = checker.check_input(text)
+        input_v = checker.check_input_verdict(text)
         output_v = checker.check_output(text)
         assert input_v.rejected
         assert output_v.rejected
@@ -267,7 +267,7 @@ class TestCustomTierRules:
             scope="input",
         ))
 
-        verdict = checker.check_input("rm -rf /root/.agent-data")
+        verdict = checker.check_input_verdict("rm -rf /root/.agent-data")
         assert verdict.rejected
 
 

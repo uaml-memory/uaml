@@ -444,7 +444,7 @@ class EthicsChecker:
             Rule: "no_client_data_leak" (Tier 1: protect individual)
             → Tier 1 wins: "Cannot delete — client data protection overrides user command"
         """
-        input_verdict = self.check_input(content)
+        input_verdict = self.check_input_verdict(content)
         combined_text = f"{content} {user_intent}".strip() if user_intent else content
 
         resolution = {

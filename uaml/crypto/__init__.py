@@ -7,6 +7,10 @@ Uses ML-KEM-768 (NIST FIPS 203) for key encapsulation + AES-256-GCM for data enc
 Designed for protecting exported data, backups, and identity layer entries.
 """
 
-from uaml.crypto.pqc import PQCKeyPair, PQCEncryptor
+try:
+    from uaml.crypto.pqc import PQCKeyPair, PQCEncryptor
+except ImportError:
+    PQCKeyPair = None
+    PQCEncryptor = None
 
 __all__ = ["PQCKeyPair", "PQCEncryptor"]

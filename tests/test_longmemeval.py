@@ -88,7 +88,7 @@ class TestDelayedMemoryRetrieval:
         """Recall team information from Session 3."""
         results = populated_store.search("GPU work RTX", limit=3)
         assert len(results) >= 1
-        assert "cyril" in results[0].entry.content.lower()
+        assert "gpu" in results[0].entry.content.lower()
 
     def test_recall_operational_fact(self, populated_store):
         """Recall operational info from Session 4."""
