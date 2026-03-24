@@ -1,71 +1,56 @@
-# UAML License Tier — Feature Matrix
+# UAML Feature Matrix
 
-> © 2026 GLG, a.s. | v1.0
+## Subscription Tiers
 
-## Tiers
+| Feature | Free | Pro €8/mo | Enterprise €99/mo |
+|---------|------|-----------|-------------------|
+| **Core** | | | |
+| Memory store + search | ✅ | ✅ | ✅ |
+| CLI tools | ✅ | ✅ | ✅ |
+| Basic PII detection | ✅ | ✅ | ✅ |
+| Basic audit log | ✅ | ✅ | ✅ |
+| Max memories | 10K | 500K | ∞ |
+| **Quality Pipeline** | | | |
+| Language detection | ❌ | ✅ | ✅ |
+| Spellcheck (Hunspell CZ/EN) | ❌ | ✅ | ✅ |
+| Noise classification | ❌ | ✅ | ✅ |
+| Importance scoring | ❌ | ✅ | ✅ |
+| Semantic deduplication | ❌ | ✅ | ✅ |
+| **Data Sources** | | | |
+| Session ingestion | ✅ | ✅ | ✅ |
+| Web source monitoring | ❌ | ✅ | ✅ |
+| Git commit ingestion | ❌ | ✅ | ✅ |
+| Email ingestion | ❌ | ✅ | ✅ |
+| **Integration** | | | |
+| REST API | ❌ | ✅ | ✅ |
+| Dashboard Web UI | ❌ | ✅ | ✅ |
+| MCP bridge | ❌ | ✅ | ✅ |
+| OpenClaw plugin | ❌ | ✅ | ✅ |
+| Neo4j graph (optional) | ❌ | ✅ | ✅ |
+| Temporal queries | ❌ | ✅ | ✅ |
+| **Security & Compliance** | | | |
+| Trust scoring (cross-reference) | ❌ | ❌ | ✅ |
+| Contradiction detection | ❌ | ❌ | ✅ |
+| Advanced anonymizer | ❌ | ❌ | ✅ |
+| Injection guard | ❌ | ❌ | ✅ |
+| PQC encryption (ML-KEM-768) | ❌ | ❌ | ✅ |
+| GDPR compliance tools | ❌ | ❌ | ✅ |
+| Full pipeline audit trail | ❌ | ❌ | ✅ |
+| Custom SLA | ❌ | ❌ | ✅ |
 
-| Tier | Price | Annual | Best For |
-|------|-------|--------|----------|
-| Community | Free | Free | Personal use, experimentation |
-| Starter | €8/mo | €80/yr | Individual professionals |
-| Professional | €29/mo | €290/yr | Power users, developers |
-| Team | €190/mo | €1,900/yr | Organizations, multi-agent |
-| Enterprise | Custom | Custom | Regulated industries |
+## Currency Options
 
-## Features
-
-| Feature | Community | Starter | Pro | Team | Enterprise |
-|---------|:---------:|:-------:|:---:|:----:|:----------:|
-| Store & recall | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Full-text search | ✅ | ✅ | ✅ | ✅ | ✅ |
-| CLI | ✅ | ✅ | ✅ | ✅ | ✅ |
-| PII detection | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Basic audit log | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Focus Engine | ❌ | ✅ | ✅ | ✅ | ✅ |
-| Presets | ❌ | ✅ | ✅ | ✅ | ✅ |
-| REST API | ❌ | ✅ | ✅ | ✅ | ✅ |
-| Dashboard UI | ❌ | ✅ | ✅ | ✅ | ✅ |
-| MCP bridge | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Export/Import | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Saved configs | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Rules audit trail | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Neo4j graph | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Temporal reasoning | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Contradiction detection | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Federation | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Multi-user RBAC | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Agent coordination | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Prompt protection | ❌ | ❌ | ❌ | ✅ | ✅ |
-| GDPR tools | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Security Configurator | ❌ | ❌ | ❌ | ✅ | ✅ |
-| PQC encryption | ❌ | ❌ | ❌ | ❌ | ✅ |
-| Custom SLA | ❌ | ❌ | ❌ | ❌ | ✅ |
-| On-premise support | ❌ | ❌ | ❌ | ❌ | ✅ |
-
-## Limits
-
-| Limit | Community | Starter | Pro | Team | Enterprise |
-|-------|:---------:|:-------:|:---:|:----:|:----------:|
-| Max memories | 10,000 | 100,000 | 1,000,000 | 5,000,000 | Unlimited |
-| Max devices | 1 | 3 | 10 | 50 | Unlimited |
+| Currency | Pro | Enterprise |
+|----------|-----|-----------|
+| EUR | €8/mo | €99/mo |
+| USD | $9/mo | $109/mo |
+| CZK | 199 Kč/mo | 2 490 Kč/mo |
 
 ## Trial
 
-7-day Professional trial included with every new installation.
-After trial: custom rules stay active (protecting data) but cannot be edited without paid license.
+30-day trial of Pro features included with every install.
 
-## Feature Gate API
+## License
 
-```python
-from uaml.feature_gate import FeatureGate
-
-gate = FeatureGate(license_manager=lm)
-gate.is_available("focus_engine")    # → bool
-gate.require("federation")           # raises FeatureNotAvailable
-gate.available_features()            # → list[str]
-```
-
-## Upgrade
-
-Portal: https://uaml-memory.com/portal
-Sales: sales@uaml.ai
+Dual licensed: Free Edition for personal use, Commercial Edition requires paid subscription.
+See [EULA](../../LICENSE) for details.
