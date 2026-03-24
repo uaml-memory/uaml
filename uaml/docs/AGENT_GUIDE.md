@@ -123,45 +123,30 @@ Key parameters:
 
 ## 5. License Tiers
 
-| Feature | Community | Starter €8/mo | Professional €29/mo | Team €190/mo | Enterprise |
-|---------|:---------:|:-------------:|:-------------------:|:------------:|:----------:|
-| Store & search | ✅ | ✅ | ✅ | ✅ | ✅ |
-| CLI | ✅ | ✅ | ✅ | ✅ | ✅ |
-| PII detection | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Basic audit log | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Focus Engine + presets | ❌ | ✅ | ✅ | ✅ | ✅ |
-| REST API | ❌ | ✅ | ✅ | ✅ | ✅ |
-| Dashboard Web UI | ❌ | ✅ | ✅ | ✅ | ✅ |
-| MCP bridge | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Export/Import | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Saved configs | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Rules audit trail | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Neo4j graph | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Temporal reasoning | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Federation (sync) | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Multi-user RBAC | ❌ | ❌ | ❌ | ✅ | ✅ |
-| Agent coordination | ❌ | ❌ | ❌ | ✅ | ✅ |
-| GDPR tools | ❌ | ❌ | ❌ | ✅ | ✅ |
-| PQC encryption | ❌ | ❌ | ❌ | ❌ | ✅ |
-| Custom SLA | ❌ | ❌ | ❌ | ❌ | ✅ |
-| **Max memories** | 1K | 10K | 100K | 500K | ∞ |
-| **Max devices** | 1 | 3 | 10 | 50 | ∞ |
+| Feature | Free | Pro €8/mo | Enterprise €99/mo |
+|---------|------|-----------|-------------------|
+| Store & search | ✅ | ✅ | ✅ |
+| CLI | ✅ | ✅ | ✅ |
+| Basic audit log | ✅ | ✅ | ✅ |
+| PII detection | ✅ | ✅ | ✅ |
+| Quality pipeline | ❌ | ✅ | ✅ |
+| Spellcheck + dedup | ❌ | ✅ | ✅ |
+| Web sources | ❌ | ✅ | ✅ |
+| REST API | ❌ | ✅ | ✅ |
+| Dashboard Web UI | ❌ | ✅ | ✅ |
+| MCP bridge | ❌ | ✅ | ✅ |
+| Neo4j graph | ❌ | ✅ | ✅ |
+| Temporal reasoning | ❌ | ✅ | ✅ |
+| Trust scoring | ❌ | ❌ | ✅ |
+| Contradiction detection | ❌ | ❌ | ✅ |
+| PQC encryption | ❌ | ❌ | ✅ |
+| Anonymizer | ❌ | ❌ | ✅ |
+| GDPR tools | ❌ | ❌ | ✅ |
+| Custom SLA | ❌ | ❌ | ✅ |
+| Max memories | 10K | 500K | ∞ |
 
-**7-day trial** of Professional features included with every install.
+30-day trial of Pro features included with every install.
 
-### Feature Check in Code
-
-```python
-from uaml.feature_gate import FeatureGate
-
-gate = FeatureGate(license_manager=lm)
-if gate.is_available("focus_engine"):
-    # use it
-else:
-    # suggest upgrade
-```
-
----
 
 ## 6. When to Suggest an Upgrade
 
